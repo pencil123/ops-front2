@@ -11,12 +11,12 @@ module.exports = override(
     javascriptEnabled: true,
      strictMath: false,
     noIeCompat: true,
-    modifyVars: {
-      "@layout-header-background": "#0d325e", // for example, you use Ant Design to change theme color.
-      "@component-background": "#0d325e",
-      "@background-color-light":"#0d2749",
-      "@primary-1":"#005fb3",
-    },
+    // modifyVars: {
+    //   "@layout-header-background": "#0d325e", // for example, you use Ant Design to change theme color.
+    //   "@component-background": "#0d325e",
+    //   "@background-color-light":"#0d2749",
+    //   "@primary-1":"#005fb3",
+    // },
     cssLoaderOptions: {}, // .less file used css-loader option, not all CSS file.
     cssModules: {
       localIdentName: "[path][name]__[local]--[hash:base64:5]", // if you use CSS Modules, and custom `localIdentName`, default is '[local]--[hash:base64:5]'.

@@ -11,7 +11,7 @@ export class MySider extends Component {
       return menu.map((item) => {
         if (!item.children || !item.children.length) {
           return (
-            <Menu.Item key={item.key || item.name} style={{color:"hsla(0,0%,100%,.65)"}}>
+             <Menu.Item key={item.key || item.name} /* style={{color:"hsla(0,0%,100%,.65)"}} */>
               <div onClick={() => this.addPane(item)}>
                 {item.icon && <Icon type={item.icon} className={['icon','iconfont',item.icon]} />}
                 <span>{item.name}</span>
@@ -71,7 +71,7 @@ export class MySider extends Component {
           theme={theme}
           mode="inline"
           selectedKeys={[activeMenu]}
-          style={{ paddingTop: 16 ,color:"hsla(0,0%,100%,.65)"}}
+          style={{ paddingTop: 16}}
         >
           {this.renderMenu(menu)}
         </Menu>

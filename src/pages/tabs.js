@@ -5,7 +5,6 @@ import NodeAdd from '@/pages/Node/Add';
 import UserList from '@/pages/User/List';
 import UserAdd from '@/pages/User/Add';
 
-
 const menu = [
     {
         name: '效能数据',
