@@ -42,6 +42,13 @@ export class Raw extends Component {
       totalCount: result.data.totalCount,
     });
   };
+
+  pageTurn = (pageTrunObj) => {
+    this.setState({pageNum: pageTrunObj.current}, () => {
+      this.initData();
+    });
+  };
+
   render() {
     return (
       <>
@@ -52,7 +59,11 @@ export class Raw extends Component {
         </Row>
         <Row id="MetricTable">
           <Col>
-            <MetricListTable records={this.state.records} totalCount={this.state.totalCount} />
+            <MetricListTable
+              records={this.state.records}
+              totalCount={this.state.totalCount}
+              pageTurn={this.pageTurn}
+            />
           </Col>
         </Row>
       </>
