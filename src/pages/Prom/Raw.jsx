@@ -4,11 +4,20 @@ import MetricAPI from "@/api/metric_api";
 import MetricSearchCard from "./components/metricSearchCard";
 import MetricListTable from "./components/metricListTable";
 
-
 export class Raw extends Component {
-    componentDidMount(){
-    }
-    
+  constructor(props) {
+    super(props);
+    this.state = {
+      records: [],
+      totalCount: "",
+      err: "",
+      pageNum: 1,
+    };
+  }
+  componentDidMount() {
+    this.initData();
+  }
+
   initData = async () => {
     let data = {};
     if (this.state.pageNum !== "" && this.state.pageNum != null) {
@@ -30,7 +39,7 @@ export class Raw extends Component {
     console.log(result);
     this.setState({
       records: result.data.records,
-      totalPage: result.data.totalPage,
+      totalCount: result.data.totalCount,
     });
   };
   render() {
@@ -43,7 +52,7 @@ export class Raw extends Component {
         </Row>
         <Row id="MetricTable">
           <Col>
-            <MetricListTable />
+            <MetricListTable records={this.state.records} totalCount={this.state.totalCount} />
           </Col>
         </Row>
       </>

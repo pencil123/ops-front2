@@ -1,6 +1,6 @@
 import axios from "axios";
 import ReactDOM from 'react-dom';
-import {Spinner} from 'react-bootstrap';
+import {Spin } from 'antd';
 /**
  * @params method {string} 方法名
  * @params url {string} 请求地址  例如：/login 配合baseURL组成完整请求地址
@@ -23,7 +23,7 @@ function showLoading () {
         var dom = document.createElement('div')
         dom.setAttribute('id', 'loading')
         document.body.appendChild(dom)
-        ReactDOM.render(<Spinner animation="border" variant="info" />, dom)
+        ReactDOM.render(<Spin  animation="border" variant="info" />, dom)
     }
     requestCount++
 }

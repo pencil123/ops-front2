@@ -4,95 +4,60 @@ import { Table} from "antd";
 const columns = [
   {
     title: 'IP地址',
-    dataIndex: 'name',
-    key: 'name',
+    dataIndex: 'hostIp',
     render: text => <a>{text}</a>,
-  },
-  {
+  }, {
     title: '应用名称',
-    dataIndex: 'age',
-    key: 'age',
-  },
-  {
+    dataIndex: 'app',
+  },{
     title: 'S码',
-    dataIndex: 'address',
-    key: 'address',
-  },
-  {
+    dataIndex: 'applicationId',
+  },{
     title: 'CPU核数',
-    key: 'tags',
-    dataIndex: 'tags',
-  },
-  {
+    dataIndex: 'cpuCore',
+  },{
     title: 'CPU峰值(%)',
-    key: 'action',
+    dataIndex: 'cpuMaxUsage',
   },{
     title: 'CPU均值(%)',
-    key: 'action',
+    dataIndex: 'cpuAvgUsage',
   },{
     title: '内存容量(G)',
-    key: 'action',
+    dataIndex: 'memoryTotal',
   },{
     title: '内存峰值(%)',
-    key: 'action',
+    dataIndex: 'memoryMaxUsage',
   },{
     title: '内存均值(%)',
-    key: 'action',
+    dataIndex: 'memoryAvgUsage',
   },{
     title: '磁盘读速率(MB/s))',
-    key: 'action',
+    dataIndex: 'diskRead',
   },{
     title: '磁盘写速率(MB/s)',
-    key: 'action',
+    dataIndex: 'diskWritten',
   },{
     title: '磁盘读延时(ms)',
-    key: 'action',
+    dataIndex: 'diskReadDelay',
   },{
     title: '磁盘写延时(ms)',
-    key: 'action',
+    dataIndex: 'diskWrittenDelay',
   },{
     title: '网络上行带宽(MB/s)',
-    key: 'action',
+    dataIndex: 'networkReceive',
   },{
     title: '网络下行带宽(MB/s)',
-    key: 'action',
+    dataIndex: 'networkTransmit',
   },{
     title: '取数时间',
-    key: 'action',
+    dataIndex: 'createTime',
   }
-];
-
-const data = [
-  {
-    key: "1",
-    firstName: "John",
-    lastName: "Brown",
-    age: 32,
-    address: "New York No. 1 Lake Park",
-    tags: ["nice", "developer"],
-  },
-  {
-    key: "2",
-    firstName: "Jim",
-    lastName: "Green",
-    age: 42,
-    address: "London No. 1 Lake Park",
-    tags: ["loser"],
-  },
-  {
-    key: "3",
-    firstName: "Joe",
-    lastName: "Black",
-    age: 32,
-    address: "Sidney No. 1 Lake Park",
-    tags: ["cool", "teacher"],
-  },
 ];
 
 export class MetricListTable extends Component {
   render() {
     return (
-      <Table dataSource={data} columns={columns} />
+      <Table rowKey="hostIp" pagination={{defaultPageSize:20,total:this.props.totalCount,showSizeChanger:false}} dataSource={this.props.records} columns={columns} />
       );
   }
 }

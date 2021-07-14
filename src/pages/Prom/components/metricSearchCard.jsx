@@ -9,9 +9,6 @@ const onFinishFailed = (errorInfo) => {
   console.log("Failed:", errorInfo);
 };
 
-
-
-
 export class MetricSearchCard extends Component {
   render() {
     return (
