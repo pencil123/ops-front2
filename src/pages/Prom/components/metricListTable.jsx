@@ -77,7 +77,7 @@ export class MetricListTable extends Component {
   render() {
     return (
       <Table
-        rowKey="hostIp"
+        rowKey="id"
         onChange={this.props.pageTurn}
         pagination={{
           defaultPageSize: 20,

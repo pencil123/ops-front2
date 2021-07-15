@@ -44,8 +44,14 @@ export class Raw extends Component {
   };
 
   pageTurn = (pageTrunObj) => {
-    this.setState({pageNum: pageTrunObj.current}, () => {
+    this.setState({ pageNum: pageTrunObj.current }, () => {
       this.initData();
+    });
+  };
+
+  searchSubmit = (searchIp, applicationId, targetFromDate,targetToDate) => {
+    this.setState({searchIp,applicationId,targetFromDate,targetToDate,pageNum:1},()=>{
+        this.initData();
     });
   };
 
@@ -54,7 +60,7 @@ export class Raw extends Component {
       <>
         <Row id="SearchTab">
           <Col>
-            <MetricSearchCard />
+            <MetricSearchCard searchSubmit={this.searchSubmit} />
           </Col>
         </Row>
         <Row id="MetricTable">
