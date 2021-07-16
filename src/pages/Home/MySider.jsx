@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { PanesContext } from "../../context/Panes";
 import { tabs, menu } from "../tabs";
 import Icon from "@ant-design/icons";
 import { Menu } from "antd";
@@ -40,7 +41,7 @@ export class MySider extends Component {
    * 点击侧边栏菜单添加标签页
    */
   addPane = (item) => {
-    const panes = this.props.panes.slice();
+    const panes = this.context.panes.slice();
     const activeMenu = item.key;
     //如果标签页不存在就添加一个
     if (!panes.find((i) => i.key === activeMenu)) {
@@ -50,14 +51,11 @@ export class MySider extends Component {
         content: tabs[item.key] || item.name,
       });
     }
-    this.props.onChangeState({
-      panes,
-      activeMenu,
-    });
+    this.context.updateState({panes,activeMenu});
   };
 
   render() {
-    const { activeMenu, theme } = this.props;
+    const { activeMenu, theme } = this.context;
     return (
       <div className={`my-sider ${theme}`}>
         <div className={`sider-menu-logo ${theme}`} >
@@ -80,4 +78,5 @@ export class MySider extends Component {
   }
 }
 
+MySider.contextType = PanesContext;
 export default MySider;

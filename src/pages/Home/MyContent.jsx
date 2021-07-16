@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Tabs, Carousel, Layout } from "antd";
+import { PanesContext } from "../../context/Panes";
 const { Content } = Layout;
 const TabPane = Tabs.TabPane;
 const imgs = [
@@ -14,7 +15,7 @@ export class MyContent extends Component {
    *  标签页的改变触发的函数
    */
   onChange = (activeKey) => {
-    this.props.onChangeState({
+    this.context.updateState({
       activeMenu: activeKey,
     });
   };
@@ -27,8 +28,8 @@ export class MyContent extends Component {
    * 关闭标签页
    */
   remove = (targetKey) => {
-    let activeMenu = this.props.activeMenu;
-    let panes = this.props.panes.slice();
+    let activeMenu = this.context.activeMenu;
+    let panes = this.context.panes.slice();
     let preIndex = panes.findIndex((item) => item.key === targetKey) - 1;
     preIndex = Math.max(preIndex, 0);
 
@@ -37,14 +38,14 @@ export class MyContent extends Component {
     if (targetKey === activeMenu) {
       activeMenu = panes[preIndex] ? panes[preIndex].key : "";
     }
-    this.props.onChangeState({
+    this.context.updateState({
       activeMenu,
       panes,
     });
   };
 
   render() {
-    const { panes, activeMenu } = this.props;
+    const { panes, activeMenu } = this.context;
     return (
       <Content style={{ margin: "0 16px"}}>
         <div className="content-container">
@@ -85,5 +86,6 @@ export class MyContent extends Component {
   }
 }
 
+MyContent.contextType = PanesContext
 
 export default MyContent;
