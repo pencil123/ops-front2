@@ -57,8 +57,8 @@ export class MySider extends Component {
   render() {
     const { activeMenu, theme } = this.context;
     return (
-      <div className={`my-sider ${theme}`}>
-        <div className={`sider-menu-logo ${theme}`} >
+      <div className={`my-sider`}>
+        <div className={`sider-menu-logo`} >
           <a
             href="/" rel="noopener noreferrer"
           >

@@ -3,12 +3,6 @@ import { Tabs, Carousel, Layout } from "antd";
 import { PanesContext } from "../../context/Panes";
 const { Content } = Layout;
 const TabPane = Tabs.TabPane;
-const imgs = [
-  `${process.env.REACT_APP_BASE_URL}/public/images/bg1.jpg`,
-  `${process.env.REACT_APP_BASE_URL}/public/images/bg2.jpg`,
-  `${process.env.REACT_APP_BASE_URL}/public/images/bg3.jpg`,
-];
-
 
 export class MyContent extends Component {
   /**
@@ -47,12 +41,12 @@ export class MyContent extends Component {
   render() {
     const { panes, activeMenu } = this.context;
     return (
-      <Content style={{ margin: "0 16px"}}>
+      <Content style={{ margin: "0 16px" }}>
         <div className="content-container">
           {panes.length ? (
             <Tabs
-              style={{ height: "100%"}}
-              tabBarStyle={{ background: "#f0f2f5", marginBottom: 0,color:"white" }}
+              style={{ height: "100%" }}
+              tabBarStyle={{ marginBottom: 0 }}
               onEdit={this.onEdit}
               onChange={this.onChange}
               activeKey={activeMenu}
@@ -60,7 +54,7 @@ export class MyContent extends Component {
               hideAdd
             >
               {panes.map((item) => (
-                <TabPane key={item.key} tab={item.name} >
+                <TabPane key={item.key} tab={item.name}>
                   <div className="tabpane-box">{item.content}</div>
                 </TabPane>
               ))}
@@ -68,15 +62,7 @@ export class MyContent extends Component {
           ) : (
             <div className="bg-box">
               <Carousel className="bg-size" autoplay autoplaySpeed={5000}>
-                {imgs.map((item) => (
-                  <div className="bg-size" key={item}>
-                    <img
-                      src={item}
-                      alt=""
-                      style={{ width: "100%", height: "100%" }}
-                    />
-                  </div>
-                ))}
+                内容为空
               </Carousel>
             </div>
           )}
@@ -86,6 +72,6 @@ export class MyContent extends Component {
   }
 }
 
-MyContent.contextType = PanesContext
+MyContent.contextType = PanesContext;
 
 export default MyContent;

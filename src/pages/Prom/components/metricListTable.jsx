@@ -1,11 +1,34 @@
 import React, { Component } from "react";
 import { Table } from "antd";
+import HostMetricDetails from "../HostMetricDetails";
+import { PanesContext } from "@/context/Panes";
 
-const columns = [
+export class MetricListTable extends Component {
+  /**
+   * 添加标签页
+   */
+  addPane (hostIp){
+    const panes = this.context.panes.slice();
+    const activeMenu = hostIp;
+    //如果标签页不存在就添加一个
+    if (!panes.find((i) => i.key === activeMenu)) {
+      panes.push({
+        name: "节点指标",
+        key: hostIp,
+        content: <HostMetricDetails />,
+      });
+    }
+    this.context.updateState({panes,activeMenu});
+  };
+
+  /**
+   * 表格的字段列表
+   */
+  columns = [
   {
     title: "IP地址",
     dataIndex: "hostIp",
-    render: (text) => <a>{text}</a>,
+    render: (text) => <span onClick={()=>this.addPane(text)} style={{cursor:"pointer",color:"#0056b3"}}>{text}</span>,
   },
   {
     title: "应用名称",
@@ -69,11 +92,6 @@ const columns = [
   },
 ];
 
-export class MetricListTable extends Component {
-  onChange = (page) => {
-    console.log(page);
-  };
-
   render() {
     return (
       <Table
@@ -85,10 +103,12 @@ export class MetricListTable extends Component {
           showSizeChanger: false,
         }}
         dataSource={this.props.records}
-        columns={columns}
+        columns={this.columns}
       />
     );
   }
 }
+
+MetricListTable.contextType = PanesContext;
 
 export default MetricListTable;

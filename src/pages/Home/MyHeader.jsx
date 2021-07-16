@@ -18,7 +18,7 @@ export class MyHeader extends Component {
   }
   render() {
     return (
-      <div style={{ background: "white", padding: "0 16px",height:64 }}>
+      <div style={{padding: "0 16px",height:64 }}>
       </div>
     );
   }
