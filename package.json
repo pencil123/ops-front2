@@ -42,6 +42,8 @@
   },
   "devDependencies": {
     "customize-cra": "^1.0.0",
+    "eslint": "^7.30.0",
+    "eslint-plugin-react": "^7.24.0",
     "less": "^4.1.1",
     "less-loader": "^5.0.0",
     "react-app-rewired": "^2.1.8"
