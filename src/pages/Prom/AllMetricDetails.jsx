@@ -4,7 +4,7 @@ import MetricAPI from "@/api/metric_api";
 import MetricSearchCard from "./components/metricSearchCard";
 import MetricListTable from "./components/metricListTable";
 
-export class Raw extends Component {
+export class AllMetricDetails extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -77,4 +77,4 @@ export class Raw extends Component {
   }
 }
 
-export default Raw;
+export default AllMetricDetails;

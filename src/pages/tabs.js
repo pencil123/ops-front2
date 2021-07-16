@@ -1,4 +1,4 @@
-import PromRaw from '@/pages/Prom/Raw';
+import AllMetricDetails from '@/pages/Prom/AllMetricDetails';
 import PromStat from '@/pages/Prom/Stat';
 import NodeManager from '@/pages/Node/Manager';
 import NodeAdd from '@/pages/Node/Add';
@@ -14,7 +14,7 @@ const menu = [
             {
                 name:'效能明细数据',
                 icon:'',
-                key:'PromRaw'
+                key:'AllMetricDetails'
             },{
                 name:'效能自定义检索',
                 icon:'',
@@ -61,7 +61,7 @@ const tabs = {
     NodeAdd:<NodeAdd />,
     UserList:<UserList/>,
     UserAdd:<UserAdd/>,
-    PromRaw:<PromRaw/>,
+    AllMetricDetails:<AllMetricDetails/>,
     PromStat:<PromStat/>
 }
 
