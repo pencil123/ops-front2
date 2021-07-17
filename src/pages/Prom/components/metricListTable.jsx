@@ -101,6 +101,7 @@ export class MetricListTable extends Component {
       <Table
         rowKey="id"
         onChange={this.props.pageTurn}
+        loading={this.props.loading}
         pagination={{
           defaultPageSize: 20,
           total: this.props.totalCount,
@@ -119,5 +120,6 @@ MetricListTable.propTypes = {
   pageTurn: PropTypes.func,
   totalCount: PropTypes.number,
   records: PropTypes.array,
+  loading: PropTypes.bool,
 };
 export default MetricListTable;

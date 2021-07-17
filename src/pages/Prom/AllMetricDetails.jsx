@@ -12,6 +12,7 @@ export class AllMetricDetails extends Component {
       totalCount: "",
       err: "",
       pageNum: 1,
+      loading: false,
     };
   }
   componentDidMount() {
@@ -19,6 +20,7 @@ export class AllMetricDetails extends Component {
   }
 
   initData = async () => {
+    this.setState({ loading: true });
     let data = {};
     if (this.state.pageNum !== "" && this.state.pageNum != null) {
       data.currentPage = this.state.pageNum;
@@ -40,6 +42,7 @@ export class AllMetricDetails extends Component {
     this.setState({
       records: result.data.records,
       totalCount: result.data.totalCount,
+      loading: false,
     });
   };
 
@@ -49,10 +52,13 @@ export class AllMetricDetails extends Component {
     });
   };
 
-  searchSubmit = (searchIp, applicationId, targetFromDate,targetToDate) => {
-    this.setState({searchIp,applicationId,targetFromDate,targetToDate,pageNum:1},()=>{
+  searchSubmit = (searchIp, applicationId, targetFromDate, targetToDate) => {
+    this.setState(
+      { searchIp, applicationId, targetFromDate, targetToDate, pageNum: 1 },
+      () => {
         this.initData();
-    });
+      }
+    );
   };
 
   render() {
@@ -66,6 +72,7 @@ export class AllMetricDetails extends Component {
         <Row id="MetricTable">
           <Col>
             <MetricListTable
+              loading={this.state.loading}
               records={this.state.records}
               totalCount={this.state.totalCount}
               pageTurn={this.pageTurn}
