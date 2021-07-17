@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Form, Input, Button, DatePicker } from "antd";
-import PropTypes from 'prop-types'
+import PropTypes from "prop-types";
 
 export class MetricSearchCard extends Component {
   constructor(props) {
@@ -31,10 +31,16 @@ export class MetricSearchCard extends Component {
   };
 
   formSubmit = (fieldsValue) => {
-      console.log(fieldsValue);
-    const fromDateChange = fieldsValue.fromDateChange === undefined ?"": fieldsValue["fromDateChange"].format("YYYY-MM-DD");
-    const toDateChange =  fieldsValue.toDateChange === undefined ?"": fieldsValue["toDateChange"].format("YYYY-MM-DD");
-    console.log(fromDateChange,toDateChange);
+    console.log(fieldsValue);
+    const fromDateChange =
+      fieldsValue.fromDateChange === undefined
+        ? ""
+        : fieldsValue["fromDateChange"].format("YYYY-MM-DD");
+    const toDateChange =
+      fieldsValue.toDateChange === undefined
+        ? ""
+        : fieldsValue["toDateChange"].format("YYYY-MM-DD");
+    console.log(fromDateChange, toDateChange);
     this.props.searchSubmit(
       this.state.searchIp,
       this.state.applicationId,
@@ -87,7 +93,7 @@ export class MetricSearchCard extends Component {
   }
 }
 MetricSearchCard.propTypes = {
-    searchSubmit: PropTypes.func
-}
+  searchSubmit: PropTypes.func,
+};
 
 export default MetricSearchCard;

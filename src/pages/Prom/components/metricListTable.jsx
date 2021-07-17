@@ -5,6 +5,9 @@ import { PanesContext } from "@/context/Panes";
 import PropTypes from "prop-types";
 
 export class MetricListTable extends Component {
+  state = {
+    columns: [],
+  };
   /**
    * 添加标签页
    */
@@ -13,6 +16,7 @@ export class MetricListTable extends Component {
     const activeMenu = hostIp;
     //如果标签页不存在就添加一个
     if (!panes.find((i) => i.key === activeMenu)) {
+      localStorage.setItem("hostMetric", hostIp);
       panes.push({
         name: "节点指标",
         key: hostIp,
@@ -22,28 +26,8 @@ export class MetricListTable extends Component {
     this.context.updateState({ panes, activeMenu });
   }
 
-  render() {
-    const columns = [
-      {
-        title: "IP地址",
-        dataIndex: "hostIp",
-        render: (text) => (
-          <span
-            onClick={() => this.addPane(text)}
-            style={{ cursor: "pointer", color: "#0056b3" }}
-          >
-            {text}
-          </span>
-        ),
-      },
-      {
-        title: "应用名称",
-        dataIndex: "app",
-      },
-      {
-        title: "S码",
-        dataIndex: "applicationId",
-      },
+  componentDidMount() {
+    const commonCols = [
       {
         title: "CPU核数",
         dataIndex: "cpuCore",
@@ -92,11 +76,46 @@ export class MetricListTable extends Component {
         title: "网络下行带宽(MB/s)",
         dataIndex: "networkTransmit",
       },
+    ];
+
+    const AllMetricBefore = [
+      {
+        title: "IP地址",
+        dataIndex: "hostIp",
+        render: (text) => (
+          <span
+            onClick={() => this.addPane(text)}
+            style={{ cursor: "pointer", color: "#0056b3" }}
+          >
+            {text}
+          </span>
+        ),
+      },
+      {
+        title: "应用名称",
+        dataIndex: "app",
+      },
+      {
+        title: "S码",
+        dataIndex: "applicationId",
+      },
+    ];
+    const MetricCreateTime = [
       {
         title: "取数时间",
         dataIndex: "createTime",
       },
     ];
+    const columns = [];
+    if (this.props.metricType === "allMetric") {
+      columns.push(...AllMetricBefore, ...commonCols, ...MetricCreateTime);
+    } else {
+      columns.push(...MetricCreateTime, ...commonCols);
+    }
+    this.setState({ columns });
+  }
+
+  render() {
     return (
       <Table
         rowKey="id"
@@ -108,7 +127,7 @@ export class MetricListTable extends Component {
           showSizeChanger: false,
         }}
         dataSource={this.props.records}
-        columns={columns}
+        columns={this.state.columns}
       />
     );
   }
@@ -121,5 +140,6 @@ MetricListTable.propTypes = {
   totalCount: PropTypes.number,
   records: PropTypes.array,
   loading: PropTypes.bool,
+  metricType: PropTypes.string,
 };
 export default MetricListTable;

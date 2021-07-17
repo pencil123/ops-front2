@@ -21,12 +21,13 @@ export class AllMetricDetails extends Component {
 
   initData = async () => {
     this.setState({ loading: true });
-    let data = {};
-    data.currentPage = this.state.pageNum;
-    data.hostIp = this.state.searchIp;
-    data.applicationId = this.state.applicationId;
-    data.endTime = this.state.targetToDate;
-    data.beginTime = this.state.targetFromDate;
+    let data = {
+      currentPage: this.state.pageNum,
+      hostIp: this.state.searchIp,
+      endTime: this.state.targetToDate,
+      beginTime: this.state.targetFromDate,
+      applicationId: this.state.applicationId,
+    };
     let result = await MetricAPI.metricList(data);
     this.setState({
       records: result.data.records,
@@ -61,6 +62,7 @@ export class AllMetricDetails extends Component {
         <Row id="MetricTable">
           <Col>
             <MetricListTable
+              metricType="allMetric"
               loading={this.state.loading}
               records={this.state.records}
               totalCount={this.state.totalCount}
