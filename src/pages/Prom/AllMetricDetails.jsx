@@ -22,23 +22,12 @@ export class AllMetricDetails extends Component {
   initData = async () => {
     this.setState({ loading: true });
     let data = {};
-    if (this.state.pageNum !== "" && this.state.pageNum != null) {
-      data.currentPage = this.state.pageNum;
-    }
-    if (this.state.searchIp !== "" && this.state.searchIp != null) {
-      data.hostIp = this.state.searchIp;
-    }
-    if (this.state.applicationId !== "" && this.state.applicationId != null) {
-      data.applicationId = this.state.applicationId;
-    }
-    if (this.state.targetToDate !== "" && this.state.targetToDate != null) {
-      data.endTime = this.state.targetToDate;
-    }
-    if (this.state.targetFromDate !== "" && this.state.targetFromDate != null) {
-      data.beginTime = this.state.targetFromDate;
-    }
+    data.currentPage = this.state.pageNum;
+    data.hostIp = this.state.searchIp;
+    data.applicationId = this.state.applicationId;
+    data.endTime = this.state.targetToDate;
+    data.beginTime = this.state.targetFromDate;
     let result = await MetricAPI.metricList(data);
-    console.log(result);
     this.setState({
       records: result.data.records,
       totalCount: result.data.totalCount,
