@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Form, Input, Button, DatePicker } from "antd";
+import PropTypes from 'prop-types'
 
 export class MetricSearchCard extends Component {
   constructor(props) {
@@ -84,6 +85,9 @@ export class MetricSearchCard extends Component {
       </Form>
     );
   }
+}
+MetricSearchCard.propTypes = {
+    searchSubmit: PropTypes.func
 }
 
 export default MetricSearchCard;

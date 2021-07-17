@@ -15,6 +15,7 @@ class LogAPI extends Server {
         throw err;
       }
     } catch (err) {
+        console.log(err)
       throw err;
     }
   }

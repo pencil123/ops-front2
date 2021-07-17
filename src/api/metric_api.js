@@ -15,6 +15,7 @@ class MetricAPI extends Server {
         throw err;
       }
     } catch (err) {
+        console.log(err)
       throw err;
     }
   }
@@ -31,6 +32,7 @@ class MetricAPI extends Server {
         throw err;
       }
     } catch (err) {
+        console.log(err)
       throw err;
     }
   }

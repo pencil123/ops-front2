@@ -62,7 +62,7 @@ export class MyContent extends Component {
           ) : (
             <div className="bg-box">
               <Carousel className="bg-size" autoplay autoplaySpeed={5000}>
-                内容为空
+                  <span></span>
               </Carousel>
             </div>
           )}

@@ -15,6 +15,7 @@ class IcpAPI extends Server {
         throw err;
       }
     } catch (err) {
+        console.log(err)
       throw err;
     }
   }
@@ -31,6 +32,7 @@ class IcpAPI extends Server {
         throw err;
       }
     } catch (err) {
+        console.log(err)
       throw err;
     }
   }
@@ -49,6 +51,7 @@ class IcpAPI extends Server {
         throw err;
       }
     } catch (err) {
+        console.log(err)
       throw err;
     }
   }

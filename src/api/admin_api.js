@@ -20,9 +20,10 @@ class AdminAPI extends Server {
         throw err;
       }
     } catch (err) {
+        console.log(err)
       throw err;
     }
-  };
+  }
 
   async adminList(){
     try {
@@ -37,6 +38,7 @@ class AdminAPI extends Server {
         throw err;
       }
     } catch (err) {
+        console.log(err)
       throw err;
     }
   }
@@ -54,6 +56,7 @@ class AdminAPI extends Server {
         throw err;
       }
     } catch (err) {
+        console.log(err)
       throw err;
     }
   }

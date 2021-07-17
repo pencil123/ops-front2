@@ -15,6 +15,7 @@ class DashBoardAPI extends Server {
         throw err;
       }
     } catch (err) {
+        console.log(err)
       throw err;
     }
   }
@@ -32,6 +33,7 @@ class DashBoardAPI extends Server {
         throw err;
       }
     } catch (err) {
+        console.log(err)
       throw err;
     }
   }

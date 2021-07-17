@@ -1,3 +1,4 @@
+import React from "react";
 import AllMetricDetails from '@/pages/Prom/AllMetricDetails';
 import PromStat from '@/pages/Prom/Stat';
 import NodeManager from '@/pages/Node/Manager';

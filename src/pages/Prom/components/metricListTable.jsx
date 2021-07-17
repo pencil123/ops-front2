@@ -2,8 +2,10 @@ import React, { Component } from "react";
 import { Table } from "antd";
 import HostMetricDetails from "../HostMetricDetails";
 import { PanesContext } from "@/context/Panes";
+import PropTypes from 'prop-types'
 
 export class MetricListTable extends Component {
+
   /**
    * 添加标签页
    */
@@ -19,7 +21,7 @@ export class MetricListTable extends Component {
       });
     }
     this.context.updateState({panes,activeMenu});
-  };
+  }
 
   /**
    * 表格的字段列表
@@ -111,4 +113,10 @@ export class MetricListTable extends Component {
 
 MetricListTable.contextType = PanesContext;
 
+MetricListTable.propTypes = {
+    pageTurn: PropTypes.func,
+    totalCount: PropTypes.number,
+    records: PropTypes.array
+
+}
 export default MetricListTable;
