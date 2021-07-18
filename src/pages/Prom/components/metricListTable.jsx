@@ -109,7 +109,9 @@ export class MetricListTable extends Component {
     const columns = [];
     if (this.props.metricType === "allMetric") {
       columns.push(...AllMetricBefore, ...commonCols, ...MetricCreateTime);
-    } else {
+    } else if(this.props.metricType ==="AnalysedMetric") {
+      columns.push(...AllMetricBefore, ...commonCols);
+    }else {
       columns.push(...MetricCreateTime, ...commonCols);
     }
     this.setState({ columns });

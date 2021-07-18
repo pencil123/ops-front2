@@ -1,6 +1,6 @@
 import React from "react";
 import AllMetricDetails from '@/pages/Prom/AllMetricDetails';
-import PromStat from '@/pages/Prom/Stat';
+import AnalysedMetricData from '@/pages/Prom/AnalysedMetricData';
 import NodeManager from '@/pages/Node/Manager';
 import NodeAdd from '@/pages/Node/Add';
 import UserList from '@/pages/User/List';
@@ -19,7 +19,7 @@ const menu = [
             },{
                 name:'效能自定义检索',
                 icon:'',
-                key:'PromStat'
+                key:'AnalysedMetricData'
             }
         ]
     },
@@ -63,7 +63,7 @@ const tabs = {
     UserList:<UserList/>,
     UserAdd:<UserAdd/>,
     AllMetricDetails:<AllMetricDetails/>,
-    PromStat:<PromStat/>
+    AnalysedMetricData:<AnalysedMetricData/>
 }
 
 
