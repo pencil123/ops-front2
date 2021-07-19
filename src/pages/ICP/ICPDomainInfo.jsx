@@ -6,7 +6,7 @@ import WebCheckLog from "./components/WebCheckLog";
 import ManagerLog from "./components/ManagerLog";
 import DomainAPI from "@/api/domain_api";
 import LogAPI from "@/api/log_api";
-//import IcpAPI from '@/api/icp_api';
+import IcpAPI from "@/api/icp_api";
 import { Tabs } from "antd";
 
 const { TabPane } = Tabs;
@@ -61,10 +61,22 @@ export class ICPDomainInfo extends Component {
     }
   };
 
+  detectableState = () => {
+    let detectable = this.state.ICPDomain.detectable === 1 ? 0 : 1;
+    let data = Object.assign({}, this.state.ICPDomain, { detectable: detectable });
+    this.setState({ ICPDomain: data }, () => {
+      let data = {
+        domain: this.state.ICPDomain.domain,
+        detectable: this.state.ICPDomain.detectable,
+      };
+      IcpAPI.detectable(data);
+    });
+  };
+
   render() {
     return (
       <div>
-        <DomainInfoDesc domainInfo={this.state.ICPDomain} />
+        <DomainInfoDesc domainInfo={this.state.ICPDomain} detectableState={this.detectableState} />
 
         <Tabs defaultActiveKey="1" onChange={this.callback}>
           <TabPane tab="二级域名" key="subDomain">
