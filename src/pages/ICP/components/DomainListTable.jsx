@@ -34,7 +34,7 @@ export class DomainListTable extends Component {
       {
         title: "域名",
         dataIndex: "domain",
-        render: (text,row) => (
+        render: (text, row) => (
           <span
             onClick={() => this.addPane(row)}
             style={{ cursor: "pointer", color: "#0056b3" }}

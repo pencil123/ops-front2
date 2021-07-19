@@ -1,17 +1,101 @@
 import React, { Component } from "react";
 import DomainInfoDesc from "./components/DomainInfoDesc";
+import SubDomainList from "./components/SubDomainList";
+import ICPCheckLog from "./components/ICPCheckLog";
+import WebCheckLog from "./components/WebCheckLog";
+import ManagerLog from "./components/ManagerLog";
+import DomainAPI from "@/api/domain_api";
+import LogAPI from "@/api/log_api";
+//import IcpAPI from '@/api/icp_api';
+import { Tabs } from "antd";
+
+const { TabPane } = Tabs;
 export class ICPDomainInfo extends Component {
   state = {
+    loading: false,
     ICPDomain: {},
   };
   componentDidMount() {
     this.setState({ ICPDomain: JSON.parse(localStorage.getItem("ICPDomain")) });
   }
+  callback = async (key) => {
+    if (key === "subDomain") {
+      let subDomain = await DomainAPI.getSubDomain({
+        domain: this.state.ICPDomain.domain,
+        currentPage: this.state.subDomainPageNum,
+      });
+      this.setState({
+        subDomains: subDomain.data.records,
+        subDomainTotalCount: subDomain.data.totalCount,
+      });
+    } else if (key === "ICPlog") {
+      let icpLogs = await LogAPI.list({
+        domain: this.state.ICPDomain.domain,
+        targetType: 1,
+        currentPage: this.state.icpLogPageNum,
+      });
+      this.setState({
+        icpLogs: icpLogs.data.records,
+        icpLogTotalCount: icpLogs.data.totalCount,
+      });
+    } else if (key === "webCheck") {
+      let icpLogs = await LogAPI.list({
+        domain: this.state.ICPDomain.domain,
+        targetType: 2,
+        currentPage: this.state.webLogPageNum,
+      });
+      this.setState({
+        webLogs: icpLogs.data.records,
+        webLogTotalCount: icpLogs.data.totalCount,
+      });
+    } else if (key === "managerLog") {
+      let adminLogs = await LogAPI.list({
+        domain: this.state.ICPDomain.domain,
+        targetType: 3,
+        currentPage: this.state.adminLogPageNum,
+      });
+      this.setState({
+        adminLogs: adminLogs.data.records,
+        adminLogTotalCount: adminLogs.data.totalCount,
+      });
+    }
+  };
 
   render() {
     return (
       <div>
         <DomainInfoDesc domainInfo={this.state.ICPDomain} />
+
+        <Tabs defaultActiveKey="1" onChange={this.callback}>
+          <TabPane tab="二级域名" key="subDomain">
+            <SubDomainList
+              records={this.state.subDomains}
+              totalCount={this.state.subDomainTotalCount}
+              loading={this.state.loading}
+            />
+          </TabPane>
+          <TabPane tab="ICP日志" key="ICPlog">
+            <ICPCheckLog
+              records={this.state.icpLogs}
+              totalCount={this.state.icpLogTotalCount}
+              loading={this.state.loading}
+            />
+          </TabPane>
+          <TabPane tab="网站检测日志" key="webCheck">
+            <WebCheckLog
+              totalCount={this.state.webLogTotalCount}
+              records={this.state.webLogs}
+              loading={this.state.loading}
+            />
+          </TabPane>
+          <TabPane tab="管理日志" key="managerLog">
+            <ManagerLog
+              totalCount={this.state.adminLogTotalCount}
+              records={this.state.adminLogs}
+              loading={this.state.loading}
+            />
+          </TabPane>
+        </Tabs>
       </div>
     );
   }
