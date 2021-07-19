@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
 
-export class Manager extends Component {
+export class ManagerAdd extends Component {
     render() {
         return (
             <div>
-                Node Manager Page
+                Add user pages
             </div>
         )
     }
 }
 
-export default Manager
+export default ManagerAdd

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-export class Update extends Component {
+export class ServerNodeAdd extends Component {
     render() {
         return (
             <div>
@@ -10,4 +10,4 @@ export class Update extends Component {
     }
 }
 
-export default Update
+export default ServerNodeAdd

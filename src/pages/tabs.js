@@ -1,10 +1,10 @@
 import React from "react";
 import AllMetricDetails from "@/pages/Prom/AllMetricDetails";
 import AnalysedMetricData from "@/pages/Prom/AnalysedMetricData";
-import NodeManager from "@/pages/Node/Manager";
-import NodeAdd from "@/pages/Node/Add";
-import UserList from "@/pages/User/List";
-import UserAdd from "@/pages/User/Add";
+import ServerManager from "@/pages/Node/ServerManager";
+import ServerNodeAdd from "@/pages/Node/ServerNodeAdd";
+import ManagerList from "@/pages/User/ManagerList";
+import ManagerAdd from "@/pages/User/ManagerAdd";
 import ICPDomain from "./ICP/ICPDomain";
 
 const menu = [
@@ -55,12 +55,12 @@ const menu = [
       {
         name: "服务器管理",
         icon: "",
-        key: "NodeManager",
+        key: "ServerManager",
       },
       {
         name: "添加服务器",
         icon: "",
-        key: "NodeAdd",
+        key: "ServerNodeAdd",
       },
     ],
   },
@@ -72,22 +72,22 @@ const menu = [
       {
         name: "管理员列表",
         icon: "",
-        key: "UserList",
+        key: "ManagerList",
       },
       {
         name: "添加管理员",
         icon: "",
-        key: "UserAdd",
+        key: "ManagerAdd",
       },
     ],
   },
 ];
 
 const tabs = {
-  NodeManager: <NodeManager />,
-  NodeAdd: <NodeAdd />,
-  UserList: <UserList />,
-  UserAdd: <UserAdd />,
+  ServerManager: <ServerManager />,
+  ServerNodeAdd: <ServerNodeAdd />,
+  ManagerList: <ManagerList />,
+  ManagerAdd: <ManagerAdd />,
   AllMetricDetails: <AllMetricDetails />,
   AnalysedMetricData: <AnalysedMetricData />,
   ValidICPDomain:<ICPDomain checkType="success" />,

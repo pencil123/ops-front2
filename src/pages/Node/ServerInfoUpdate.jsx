@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
 
-export class List extends Component {
+export class ServerInfoUpdate extends Component {
     render() {
         return (
             <div>
-                User List Pages
+                Node Add pages
             </div>
         )
     }
 }
 
-export default List
+export default ServerInfoUpdate
