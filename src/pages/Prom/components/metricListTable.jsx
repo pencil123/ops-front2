@@ -82,9 +82,9 @@ export class MetricListTable extends Component {
       {
         title: "IP地址",
         dataIndex: "hostIp",
-        render: (text,row) => (
+        render: (text) => (
           <span
-            onClick={() => this.addPane(row)}
+            onClick={() => this.addPane(text)}
             style={{ cursor: "pointer", color: "#0056b3" }}
           >
             {text}
