@@ -2,8 +2,27 @@ import React, { Component } from "react";
 import { Table } from "antd";
 import PropTypes from "prop-types";
 import { PanesContext } from "@/context/Panes";
+import ICPDomainInfo from "../ICPDomainInfo";
 
 export class DomainListTable extends Component {
+  /**
+   * 添加标签页
+   */
+  addPane(record) {
+    const panes = this.context.panes.slice();
+    const activeMenu = record.domain;
+    //如果标签页不存在就添加一个
+    if (!panes.find((i) => i.key === activeMenu)) {
+      localStorage.setItem("ICPDomain", JSON.stringify(record));
+      panes.push({
+        name: "ICP域名详情",
+        key: record.domain,
+        content: <ICPDomainInfo />,
+      });
+    }
+    this.context.updateState({ panes, activeMenu });
+  }
+
   render() {
     const httpType = {
       http: "http://",
@@ -15,6 +34,14 @@ export class DomainListTable extends Component {
       {
         title: "域名",
         dataIndex: "domain",
+        render: (text,row) => (
+          <span
+            onClick={() => this.addPane(row)}
+            style={{ cursor: "pointer", color: "#0056b3" }}
+          >
+            {text}
+          </span>
+        ),
       },
       {
         title: "备案编号",
