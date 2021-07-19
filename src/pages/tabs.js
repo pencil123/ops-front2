@@ -6,8 +6,6 @@ import NodeAdd from "@/pages/Node/Add";
 import UserList from "@/pages/User/List";
 import UserAdd from "@/pages/User/Add";
 import ICPDomain from "./ICP/ICPDomain";
-import ValidICPDomain from "./ICP/ValidICPDomain";
-import InvalidICPDomain from "./ICP/InvalidICPDomain";
 
 const menu = [
   {
@@ -92,9 +90,9 @@ const tabs = {
   UserAdd: <UserAdd />,
   AllMetricDetails: <AllMetricDetails />,
   AnalysedMetricData: <AnalysedMetricData />,
-  ValidICPDomain:<ValidICPDomain />,
-  InvalidICPDomain :<InvalidICPDomain />,
-  ICPDomain:<ICPDomain />
+  ValidICPDomain:<ICPDomain checkType="success" />,
+  InvalidICPDomain :<ICPDomain checkType="fail" />,
+  ICPDomain:<ICPDomain checkType="all"/>
 };
 
 export { menu, tabs };
