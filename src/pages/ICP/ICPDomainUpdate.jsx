@@ -21,7 +21,6 @@ export class ICPDomainUpdate extends Component {
     this.setState({visible:true})
   };
   handleSubmit = async() => {
-      console.log(this.icpFromRef.current.getFieldsValue())
       await IcpAPI.update(this.icpFromRef.current.getFieldsValue())
       this.setState({visible:false})
   };
