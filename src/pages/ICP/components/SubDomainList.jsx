@@ -3,6 +3,9 @@ import { Table } from "antd";
 import PropTypes from "prop-types";
 
 export class SubDomainList extends Component {
+  MypageTurn = (pageTrunObj) => {
+    this.props.pageTurn(pageTrunObj.current, "subDomain");
+  };
   render() {
     const columns = [
       {
@@ -26,24 +29,32 @@ export class SubDomainList extends Component {
         dataIndex: "managerCode",
       },
     ];
+
     return (
-      <Table
-        rowKey="id"
-        //onChange={this.props.pageTurn}
-        loading={this.props.loading}
-        pagination={{
-          defaultPageSize: 20,
-          total: this.props.totalCount,
-          showSizeChanger: false,
-        }}
-        dataSource={this.props.records}
-        columns={columns}
-      />
+      <>
+        {this.props.records.length === 0 ? (
+          <div>此域名未注册子域名</div>
+        ) : (
+          <Table
+            rowKey="id"
+            onChange={this.MypageTurn}
+            loading={this.props.loading}
+            pagination={{
+              defaultPageSize: 20,
+              total: this.props.totalCount,
+              showSizeChanger: false,
+            }}
+            dataSource={this.props.records}
+            columns={columns}
+          />
+        )}
+      </>
     );
   }
 }
 
 SubDomainList.propTypes = {
+  pageTurn: PropTypes.func,
   records: PropTypes.array,
   totalCount: PropTypes.number,
   loading: PropTypes.bool,

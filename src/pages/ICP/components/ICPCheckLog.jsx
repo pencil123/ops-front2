@@ -3,6 +3,9 @@ import { Table } from "antd";
 import PropTypes from "prop-types";
 
 export class ICPCheckLog extends Component {
+  MypageTurn = (pageTrunObj) => {
+    this.props.pageTurn(pageTrunObj.current, "ICPlog");
+  };
   render() {
     const columns = [
       {
@@ -21,7 +24,7 @@ export class ICPCheckLog extends Component {
     return (
       <Table
         rowKey="id"
-        //onChange={this.props.pageTurn}
+        onChange={this.MypageTurn}
         loading={this.props.loading}
         pagination={{
           defaultPageSize: 20,
@@ -36,6 +39,7 @@ export class ICPCheckLog extends Component {
 }
 
 ICPCheckLog.propTypes = {
+  pageTurn: PropTypes.func,
   records: PropTypes.array,
   totalCount: PropTypes.number,
   loading: PropTypes.bool,

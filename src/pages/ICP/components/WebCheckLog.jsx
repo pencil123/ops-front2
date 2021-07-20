@@ -2,6 +2,10 @@ import React, { Component } from "react";
 import { Table } from "antd";
 import PropTypes from "prop-types";
 export class WebCheckLog extends Component {
+  MypageTurn = (pageTrunObj) => {
+      console.log(pageTrunObj);
+    this.props.pageTurn(pageTrunObj.current,"webCheck");
+  };
   render() {
     const columns = [
       {
@@ -20,7 +24,7 @@ export class WebCheckLog extends Component {
     return (
       <Table
         rowKey="id"
-        //onChange={this.props.pageTurn}
+        onChange={this.MypageTurn}
         loading={this.props.loading}
         pagination={{
           defaultPageSize: 20,
@@ -34,6 +38,7 @@ export class WebCheckLog extends Component {
   }
 }
 WebCheckLog.propTypes = {
+  pageTurn: PropTypes.func,
   records: PropTypes.array,
   totalCount: PropTypes.number,
   loading: PropTypes.bool,

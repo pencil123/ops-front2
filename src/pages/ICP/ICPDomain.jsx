@@ -11,19 +11,27 @@ export class ICPDomain extends Component {
     pageNum: 1,
     crumbs: [],
   };
-
   componentDidMount() {
     this.initData();
   }
 
   initData = async () => {
-    let data = { currentPage: this.state.pageNum,checkType:this.props.checkType};
+    let data = {
+      currentPage: this.state.pageNum,
+      checkType: this.props.checkType,
+    };
     let result = await IcpAPI.list(data);
     this.setState({
       records: result.data.records,
       totalCount: result.data.totalCount,
     });
   };
+  pageTurn = (pageTrunObj) => {
+    this.setState({ pageNum: pageTrunObj.current }, () => {
+      this.initData();
+    });
+  };
+
   render() {
     return (
       <DomainListTable
