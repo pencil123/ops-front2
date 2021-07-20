@@ -1,16 +1,12 @@
 import React, { Component } from "react";
-import { Table } from "antd";
+import { Table, Modal } from "antd";
 import AdminAPI from "@/api/admin_api";
 export class ManagerList extends Component {
   state = {
-    show: false,
-    setShow: false,
+    visibleDel: false,
     currentPage: "",
     records: [],
-    totalPage: "",
-    delUser: "",
     err: "",
-    searchIp: "",
   };
   componentDidMount() {
     this.initData();
@@ -24,7 +20,15 @@ export class ManagerList extends Component {
     });
   };
   managerDelete = (userCode) => {
-    console.log(userCode);
+    this.setState({ visible: true, delUserCode: userCode });
+  };
+  handleCancel = () => {
+    this.setState({ visible: false });
+  };
+  handleSubmit = async () => {
+    await AdminAPI.adminDelete({ userCode: this.state.delUserCode });
+    this.setState({ visible: false });
+    this.initData();
   };
   render() {
     const columns = [
@@ -51,17 +55,27 @@ export class ManagerList extends Component {
       },
     ];
     return (
-      <Table
-        rowKey="userCode"
-        loading={this.state.loading}
-        pagination={{
-          defaultPageSize: 20,
-          total: this.state.totalCount,
-          showSizeChanger: false,
-        }}
-        dataSource={this.state.records}
-        columns={columns}
-      />
+      <>
+        <Modal
+          title="管理员账号删除"
+          visible={this.state.visible}
+          onOk={this.handleSubmit}
+          onCancel={this.handleCancel}
+        >
+          是否要删除管理员账号： <b>{this.state.delUserCode}</b>？
+        </Modal>
+        <Table
+          rowKey="userCode"
+          loading={this.state.loading}
+          pagination={{
+            defaultPageSize: 20,
+            total: this.state.totalCount,
+            showSizeChanger: false,
+          }}
+          dataSource={this.state.records}
+          columns={columns}
+        />
+      </>
     );
   }
 }
