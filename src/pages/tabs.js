@@ -2,7 +2,6 @@ import React from "react";
 import AllMetricDetails from "@/pages/Prom/AllMetricDetails";
 import AnalysedMetricData from "@/pages/Prom/AnalysedMetricData";
 import ServerManager from "@/pages/Node/ServerManager";
-import ServerNodeAdd from "@/pages/Node/ServerNodeAdd";
 import ManagerList from "@/pages/User/ManagerList";
 import ManagerAdd from "@/pages/User/ManagerAdd";
 import ICPDomain from "./ICP/ICPDomain";
@@ -48,27 +47,15 @@ const menu = [
     ],
   },
   {
-    name: "主机管理",
+    name: "管理员",
     icon: "info-circle",
-    key: "Node",
+    key: "User",
     children: [
       {
         name: "服务器管理",
         icon: "",
         key: "ServerManager",
       },
-      {
-        name: "添加服务器",
-        icon: "",
-        key: "ServerNodeAdd",
-      },
-    ],
-  },
-  {
-    name: "管理员",
-    icon: "info-circle",
-    key: "User",
-    children: [
       {
         name: "管理员列表",
         icon: "",
@@ -85,14 +72,13 @@ const menu = [
 
 const tabs = {
   ServerManager: <ServerManager />,
-  ServerNodeAdd: <ServerNodeAdd />,
   ManagerList: <ManagerList />,
   ManagerAdd: <ManagerAdd />,
   AllMetricDetails: <AllMetricDetails />,
   AnalysedMetricData: <AnalysedMetricData />,
-  ValidICPDomain:<ICPDomain checkType="success" />,
-  InvalidICPDomain :<ICPDomain checkType="fail" />,
-  ICPDomain:<ICPDomain checkType="all"/>
+  ValidICPDomain: <ICPDomain checkType="success" />,
+  InvalidICPDomain: <ICPDomain checkType="fail" />,
+  ICPDomain: <ICPDomain checkType="all" />,
 };
 
 export { menu, tabs };
