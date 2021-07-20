@@ -4,6 +4,9 @@ import { tabs, menu } from "../tabs";
 import Icon from "@ant-design/icons";
 import { Menu } from "antd";
 export class MySider extends Component {
+  state = {
+    openKeys: "",
+  };
   /**
    * 生成侧边栏菜单
    */
@@ -12,9 +15,18 @@ export class MySider extends Component {
       return menu.map((item) => {
         if (!item.children || !item.children.length) {
           return (
-             <Menu.Item key={item.key || item.name} /* style={{color:"hsla(0,0%,100%,.65)"}} */>
+            <Menu.Item
+              key={
+                item.key || item.name
+              } /* style={{color:"hsla(0,0%,100%,.65)"}} */
+            >
               <div onClick={() => this.addPane(item)}>
-                {item.icon && <Icon type={item.icon} className={['icon','iconfont',item.icon]} />}
+                {item.icon && (
+                  <Icon
+                    type={item.icon}
+                    className={["icon", "iconfont", item.icon]}
+                  />
+                )}
                 <span>{item.name}</span>
               </div>
             </Menu.Item>
@@ -25,7 +37,12 @@ export class MySider extends Component {
               key={item.key}
               title={
                 <span>
-                  {item.icon && <Icon type={item.icon} className={['icon','iconfont',item.icon]} />}
+                  {item.icon && (
+                    <Icon
+                      type={item.icon}
+                      className={["icon", "iconfont", item.icon]}
+                    />
+                  )}
                   <span>{item.name}</span>
                 </span>
               }
@@ -51,25 +68,35 @@ export class MySider extends Component {
         content: tabs[item.key] || item.name,
       });
     }
-    this.context.updateState({panes,activeMenu});
+    this.context.updateState({ panes, activeMenu });
+  };
+  onOpenChange = (keys) => {
+    const latestOpenKey = keys.find(
+      (key) => this.state.openKeys.indexOf(key) === -1
+    );
+    this.setState({ openKeys: [latestOpenKey] });
   };
 
   render() {
     const { activeMenu, theme } = this.context;
     return (
       <div className={`my-sider`}>
-        <div className={`sider-menu-logo`} >
-          <a
-            href="/" rel="noopener noreferrer"
-          >
-            <img src={require("../../assets/images/logo.png").default} alt="Logo" style={{margin:"30px auto",display:"block"}} />
+        <div className={`sider-menu-logo`}>
+          <a href="/" rel="noopener noreferrer">
+            <img
+              src={require("../../assets/images/logo.png").default}
+              alt="Logo"
+              style={{ margin: "30px auto", display: "block" }}
+            />
           </a>
         </div>
         <Menu
           theme={theme}
           mode="inline"
           selectedKeys={[activeMenu]}
-          style={{ paddingTop: 16}}
+          style={{ paddingTop: 16 }}
+          openKeys={this.state.openKeys}
+          onOpenChange={this.onOpenChange}
         >
           {this.renderMenu(menu)}
         </Menu>
