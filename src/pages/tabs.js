@@ -5,8 +5,14 @@ import ServerManager from "@/pages/Node/ServerManager";
 import ManagerList from "@/pages/User/ManagerList";
 import ManagerAdd from "@/pages/User/ManagerAdd";
 import ICPDomain from "./ICP/ICPDomain";
+import Dashboard from "./Dashboard/Dashboard";
 
 const menu = [
+  {
+    name: "概览",
+    icon: "iconjiankong",
+    key: "dashboard",
+  },
   {
     name: "效能数据",
     icon: "iconjiankong",
@@ -71,6 +77,7 @@ const menu = [
 ];
 
 const tabs = {
+  dashboard: <Dashboard />,
   ServerManager: <ServerManager />,
   ManagerList: <ManagerList />,
   ManagerAdd: <ManagerAdd />,
