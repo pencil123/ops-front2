@@ -57,7 +57,7 @@ export class ServerManager extends Component {
 
   formSubmit = (fieldsValue) => {
     this.setState(
-      { hostIp: fieldsValue.hostIp, applicationId: fieldsValue.applicationId },
+      { hostIp: fieldsValue.hostIp, applicationId: fieldsValue.applicationId,pageNum:1},
       () => {
         this.initData();
       }
@@ -189,6 +189,7 @@ export class ServerManager extends Component {
           onChange={this.pageTurn}
           loading={this.state.loading}
           pagination={{
+            current: this.state.pageNum,
             defaultPageSize: 20,
             total: this.state.totalCount,
             showSizeChanger: false,

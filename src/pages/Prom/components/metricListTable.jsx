@@ -109,9 +109,9 @@ export class MetricListTable extends Component {
     const columns = [];
     if (this.props.metricType === "allMetric") {
       columns.push(...AllMetricBefore, ...commonCols, ...MetricCreateTime);
-    } else if(this.props.metricType ==="AnalysedMetric") {
+    } else if (this.props.metricType === "AnalysedMetric") {
       columns.push(...AllMetricBefore, ...commonCols);
-    }else {
+    } else {
       columns.push(...MetricCreateTime, ...commonCols);
     }
     this.setState({ columns });
@@ -124,6 +124,7 @@ export class MetricListTable extends Component {
         onChange={this.props.pageTurn}
         loading={this.props.loading}
         pagination={{
+          current: this.props.current,
           defaultPageSize: 20,
           total: this.props.totalCount,
           showSizeChanger: false,
@@ -143,5 +144,6 @@ MetricListTable.propTypes = {
   records: PropTypes.array,
   loading: PropTypes.bool,
   metricType: PropTypes.string,
+  current: PropTypes.number,
 };
 export default MetricListTable;

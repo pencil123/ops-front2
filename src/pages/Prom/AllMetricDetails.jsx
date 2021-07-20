@@ -62,6 +62,7 @@ export class AllMetricDetails extends Component {
         <Row id="MetricTable">
           <Col>
             <MetricListTable
+            current={this.state.pageNum}
               metricType="allMetric"
               loading={this.state.loading}
               records={this.state.records}

@@ -61,6 +61,7 @@ export class AnalysedMetricData extends Component {
         <Row id="MetricTable">
           <Col>
             <MetricListTable
+              current={this.state.pageNum}
               metricType="AnalysedMetric"
               loading={this.state.loading}
               records={this.state.records}
