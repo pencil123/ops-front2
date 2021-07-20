@@ -43,7 +43,6 @@ export class ICPDomainUpdate extends Component {
           <Meta title="ICP 域名管理" />
           <Form
             ref={this.icpFromRef}
-            name="basic"
             labelCol={{ span: 8 }}
             wrapperCol={{ span: 16 }}
             onFinish={this.onFinish}
