@@ -2,7 +2,7 @@ import Server from './server'
 import {getUrlConcat} from '../utils/commons';
 
 class DashBoardAPI extends Server {
-  async userDashBoard(data){
+  async userDashBoard(){
     try {
       let result = await this.axios("get", '/api/v1/prom/application/user/show');
       if (result) {

@@ -9,7 +9,7 @@ import Dashboard from "./Dashboard/Dashboard";
 
 const menu = [
   {
-    name: "概览",
+    name: "DashBoard",
     icon: "iconjiankong",
     key: "dashboard",
   },

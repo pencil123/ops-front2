@@ -32,22 +32,18 @@ export class SubDomainList extends Component {
 
     return (
       <>
-        {this.props.records.length === 0 ? (
-          <div>此域名未注册子域名</div>
-        ) : (
-          <Table
-            rowKey="id"
-            onChange={this.MypageTurn}
-            loading={this.props.loading}
-            pagination={{
-              defaultPageSize: 20,
-              total: this.props.totalCount,
-              showSizeChanger: false,
-            }}
-            dataSource={this.props.records}
-            columns={columns}
-          />
-        )}
+        <Table
+          rowKey="id"
+          onChange={this.MypageTurn}
+          loading={this.props.loading}
+          pagination={{
+            defaultPageSize: 20,
+            total: this.props.totalCount,
+            showSizeChanger: false,
+          }}
+          dataSource={this.props.records}
+          columns={columns}
+        />
       </>
     );
   }

@@ -19,6 +19,24 @@ class SkywalkingAPI extends Server {
       throw err;
     }
   }
+
+    async topologyMeta(data){
+    try {
+      let result = await this.axios("get","/api/v1/skywalking/topo/queryServiceTopo" + getUrlConcat(data));
+      if (result) {
+        return result;
+      } else {
+        let err = {
+          tip: '获取拓扑图元数据失败',
+          response: result,
+        };
+        throw err;
+      }
+    } catch (err) {
+        console.log(err)
+      throw err;
+    }
+  }
 }
 
 export default new SkywalkingAPI()
