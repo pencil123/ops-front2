@@ -33,13 +33,14 @@ export class index extends React.Component {
   }
 
   onCollapse = (collapsed) => {
-    console.log(collapsed);
-    this.setState({ collapsed });
+    this.setState({ collapsed }, () => {
+      console.log(this.state);
+    });
   };
-  _setState = (obj) => {
-    this.setState(obj);
-    console.log("输出Obj:", obj);
-  };
+  //   _setState = (obj) => {
+  //     this.setState(obj);
+  //     console.log("输出Obj:", obj);
+  //   };
   render() {
     const { collapsed } = this.state;
     return (

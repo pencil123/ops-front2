@@ -9,6 +9,8 @@ export const PanesContext = React.createContext();
 export const PanesActions = (self) =>({
     updateState(obj){
         console.log(obj);
-        self.setState(obj)
+        self.setState({...obj},()=>{
+            console.log(self.state)
+        })
     }
 })

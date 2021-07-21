@@ -73,6 +73,7 @@ export class MySider extends Component {
         <div className={`sider-menu-logo`}>
           <a href="/" rel="noopener noreferrer">
             <img
+              // eslint-disable-next-line no-undef
               src={require("../../assets/images/logo.png").default}
               alt="Logo"
               style={{ margin: "30px auto", display: "block" }}
