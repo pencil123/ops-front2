@@ -1,8 +1,7 @@
 import React from "react";
 import { Layout } from "antd";
-
 import { PanesContext, PanesActions } from "../../context/Panes";
-
+import Dashboard from "../Dashboard/Dashboard";
 import MySider from "./MySider";
 import MyContent from "./MyContent";
 import MyFooter from "./MyFooter";
@@ -20,6 +19,18 @@ export class index extends React.Component {
       ...PanesActions(this),
     };
   }
+  componentDidMount() {
+    this.setState({
+      panes: [
+        {
+          name: "DashBoard",
+          key: "dashboard",
+          content: <Dashboard />,
+        },
+      ],
+      activeMenu: "dashboard",
+    });
+  }
 
   onCollapse = (collapsed) => {
     console.log(collapsed);
@@ -30,16 +41,16 @@ export class index extends React.Component {
     console.log("输出Obj:", obj);
   };
   render() {
-    const { collapsed} = this.state;
+    const { collapsed } = this.state;
     return (
       <PanesContext.Provider value={this.state}>
         <Layout style={{ minHeight: "100vh" }}>
           <Sider collapsible collapsed={collapsed} onCollapse={this.onCollapse}>
-            <MySider/>
+            <MySider />
           </Sider>
           <Layout className="site-layout">
             <MyHeader />
-            <MyContent/>
+            <MyContent />
             <MyFooter />
           </Layout>
         </Layout>
