@@ -49,7 +49,13 @@ export class index extends React.Component {
             <MySider />
           </Sider>
           <Layout className="site-layout">
-            <MyHeader />
+            <MyHeader
+              user={{
+                username: "lyzhang",
+                avatar:
+                  "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png",
+              }}
+            />
             <MyContent />
             <MyFooter />
           </Layout>
