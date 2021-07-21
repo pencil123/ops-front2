@@ -7,10 +7,10 @@ import ManagerLog from "./components/ManagerLog";
 import DomainAPI from "@/api/domain_api";
 import LogAPI from "@/api/log_api";
 import IcpAPI from "@/api/icp_api";
-import { Tabs } from "antd";
-
+import { Tabs, Modal, Form, Input } from "antd";
 const { TabPane } = Tabs;
 export class ICPDomainInfo extends Component {
+  icpFromRef = React.createRef();
   state = {
     loading: false,
     ICPDomain: {},
@@ -27,6 +27,7 @@ export class ICPDomainInfo extends Component {
     adminLogPageNum: 1,
     adminLogTotalPage: "",
   };
+
   componentDidMount() {
     this.setState(
       { ICPDomain: JSON.parse(localStorage.getItem("ICPDomain")) },
@@ -45,7 +46,6 @@ export class ICPDomainInfo extends Component {
         subDomains: subDomain.data.records,
         subDomainTotalCount: subDomain.data.totalCount,
       });
-      console.log(subDomain.data.records);
     } else if (key === "ICPlog") {
       let icpLogs = await LogAPI.list({
         domain: this.state.ICPDomain.domain,
@@ -79,7 +79,7 @@ export class ICPDomainInfo extends Component {
     }
   };
   pageTurn = (pageNum, from) => {
-      console.log(pageNum,from)
+    console.log(pageNum, from);
     if (from === "subDomain")
       this.setState({ subDomainPageNum: pageNum }, () => {
         this.callback(from);
@@ -111,12 +111,60 @@ export class ICPDomainInfo extends Component {
     });
   };
 
+  ICPDomainUpdate = (DomainInfos) => {
+    console.log(DomainInfos);
+    this.setState({ visible: true }, () => {
+      this.icpFromRef.current.setFieldsValue({
+        siteLicense: DomainInfos.siteLicense,
+        domain: DomainInfos.domain,
+        siteName: DomainInfos.siteName,
+        managerName: DomainInfos.managerName,
+        managerCode: DomainInfos.managerCode,
+      });
+    });
+  };
+  handleSubmit = async () => {
+    await IcpAPI.update(this.icpFromRef.current.getFieldsValue());
+    this.setState({ visible: false });
+  };
+  handleCancel = () => {
+    this.setState({ visible: false });
+  };
   render() {
     return (
       <div>
+        <Modal
+          title="ICP 域名管理"
+          visible={this.state.visible}
+          onOk={this.handleSubmit}
+          onCancel={this.handleCancel}
+        >
+          <Form
+            ref={this.icpFromRef}
+            labelCol={{ span: 8 }}
+            wrapperCol={{ span: 16 }}
+          >
+            <Form.Item label="域名管理" name="domain">
+              <Input disabled={true} />
+            </Form.Item>
+            <Form.Item label="备案公司" name="siteName">
+              <Input disabled={true} />
+            </Form.Item>
+            <Form.Item label="备案编号" name="siteLicense">
+              <Input />
+            </Form.Item>
+            <Form.Item label="管理人" name="managerName">
+              <Input />
+            </Form.Item>
+            <Form.Item label="管理人工号" name="managerCode">
+              <Input />
+            </Form.Item>
+          </Form>
+        </Modal>
         <DomainInfoDesc
           domainInfo={this.state.ICPDomain}
           detectableState={this.detectableState}
+          update={this.ICPDomainUpdate}
         />
         <Tabs defaultActiveKey="1" onChange={this.callback}>
           <TabPane tab="二级域名" key="subDomain">

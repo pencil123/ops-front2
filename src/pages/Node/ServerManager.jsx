@@ -57,7 +57,11 @@ export class ServerManager extends Component {
 
   formSubmit = (fieldsValue) => {
     this.setState(
-      { hostIp: fieldsValue.hostIp, applicationId: fieldsValue.applicationId,pageNum:1},
+      {
+        hostIp: fieldsValue.hostIp,
+        applicationId: fieldsValue.applicationId,
+        pageNum: 1,
+      },
       () => {
         this.initData();
       }

@@ -2,8 +2,6 @@ import React, { Component } from "react";
 import { Descriptions } from "antd";
 import PropTypes from "prop-types";
 import { Switch } from "antd";
-import { PanesContext } from "@/context/Panes";
-import ICPDomainUpdate from "../ICPDomainUpdate";
 
 export class DomainInfoDesc extends Component {
   state = {
@@ -29,24 +27,6 @@ export class DomainInfoDesc extends Component {
     return { __html: result };
   };
 
-  addPane = () => {
-    const panes = this.context.panes.slice();
-    const activeMenu = "update" + this.props.domainInfo.domain;
-    //如果标签页不存在就添加一个
-    if (!panes.find((i) => i.key === activeMenu)) {
-      localStorage.setItem(
-        "ICPDomainUpdate",
-        JSON.stringify(this.props.domainInfo)
-      );
-      panes.push({
-        name: "ICP域名更新",
-        key: "update" + this.props.domainInfo.domain,
-        content: <ICPDomainUpdate />,
-      });
-    }
-    this.context.updateState({ panes, activeMenu });
-  };
-
   render() {
     const domainInfo = this.props.domainInfo;
     return (
@@ -54,7 +34,9 @@ export class DomainInfoDesc extends Component {
         <div className="DomainInfoHeader">
           <span>{"域名 " + domainInfo.domain + " 详情"}</span>
           <Switch defaultChecked onChange={this.props.detectableState} />
-          <button onClick={this.addPane}>更新</button>
+          <button onClick={() => this.props.update(this.props.domainInfo)}>
+            更新
+          </button>
         </div>
         <Descriptions bordered>
           <Descriptions.Item label="公司">
@@ -93,6 +75,6 @@ export class DomainInfoDesc extends Component {
 DomainInfoDesc.propTypes = {
   domainInfo: PropTypes.object,
   detectableState: PropTypes.func,
+  update: PropTypes.func,
 };
-DomainInfoDesc.contextType = PanesContext;
 export default DomainInfoDesc;
