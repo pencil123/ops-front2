@@ -1,8 +1,11 @@
 import React, { Component } from "react";
 import { PanesContext } from "../../context/Panes";
 import { tabs, menu } from "../tabs";
-import Icon from "@ant-design/icons";
+import { createFromIconfontCN } from "@ant-design/icons";
 import { Menu } from "antd";
+const IconFont = createFromIconfontCN({
+  scriptUrl: "//at.alicdn.com/t/font_2690980_nx7hw0elzf.js",
+});
 export class MySider extends Component {
   state = {
     openKeys: "",
@@ -15,18 +18,9 @@ export class MySider extends Component {
       return menu.map((item) => {
         if (!item.children || !item.children.length) {
           return (
-            <Menu.Item
-              key={
-                item.key || item.name
-              } /* style={{color:"hsla(0,0%,100%,.65)"}} */
-            >
+            <Menu.Item key={item.key || item.name}>
               <div onClick={() => this.addPane(item)}>
-                {item.icon && (
-                  <Icon
-                    type={item.icon}
-                    className={["icon", "iconfont", item.icon]}
-                  />
-                )}
+                <IconFont type={item.icon} />
                 <span>{item.name}</span>
               </div>
             </Menu.Item>
@@ -37,12 +31,7 @@ export class MySider extends Component {
               key={item.key}
               title={
                 <span>
-                  {item.icon && (
-                    <Icon
-                      type={item.icon}
-                      className={["icon", "iconfont", item.icon]}
-                    />
-                  )}
+                  <IconFont type={item.icon} />
                   <span>{item.name}</span>
                 </span>
               }

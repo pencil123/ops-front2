@@ -10,66 +10,66 @@ import Dashboard from "./Dashboard/Dashboard";
 const menu = [
   {
     name: "DashBoard",
-    icon: "iconjiankong",
+    icon: "icon-helm",
     key: "dashboard",
   },
   {
     name: "效能数据",
-    icon: "iconjiankong",
+    icon: "icon-Metrics",
     key: "Prom",
     children: [
       {
         name: "效能明细数据",
-        icon: "",
+        icon: "icon-submenu",
         key: "AllMetricDetails",
       },
       {
         name: "效能自定义检索",
-        icon: "",
+        icon: "icon-submenu",
         key: "AnalysedMetricData",
       },
     ],
   },
   {
     name: "ICP域名备案",
-    icon: "iconjiankong",
+    icon: "icon-ICP-",
     key: "icp",
     children: [
       {
         name: "全部ICP域名",
-        icon: "",
+        icon: "icon-submenu",
         key: "ICPDomain",
       },
       {
         name: "正常ICP域名",
-        icon: "",
+        icon: "icon-submenu",
         key: "ValidICPDomain",
       },
       {
         name: "异常ICP域名",
-        icon: "",
+        icon: "icon-submenu",
         key: "InvalidICPDomain",
       },
     ],
   },
   {
     name: "管理员",
-    icon: "info-circle",
+    icon: "icon-admin",
     key: "User",
     children: [
       {
         name: "服务器管理",
-        icon: "",
+        icon: "icon-submenu",
         key: "ServerManager",
       },
       {
         name: "管理员列表",
-        icon: "",
+        icon: "icon-submenu",
         key: "ManagerList",
       },
       {
         name: "添加管理员",
-        icon: "",
+        icon: "icon-submenu",
         key: "ManagerAdd",
       },
     ],
