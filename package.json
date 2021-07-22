@@ -18,10 +18,13 @@
     "web-vitals": "^1.1.2"
   },
   "scripts": {
-    "start": "react-app-rewired start",
-    "build": "react-app-rewired build",
+	"start": "dotenv -e src/config/.env.development  react-app-rewired start",
+    "build": "react-scripts build",
     "test": "react-app-rewired test",
-    "eject": "react-scripts eject"
+    "start:dev": "dotenv -e src/config/.env.development  react-app-rewired start",
+    "eject": "react-scripts eject",
+    "build:test": "dotenv -e src/config/.env.testing react-app-rewired build",
+    "build:prod": "dotenv -e src/config/.env.production react-app-rewired build"
   },
   "eslintConfig": {
     "extends": [
@@ -44,6 +47,7 @@
   "devDependencies": {
     "babel-eslint": "^10.1.0",
     "customize-cra": "^1.0.0",
+    "dotenv-cli": "^4.0.0",
     "eslint": "^7.30.0",
     "eslint-plugin-react": "^7.24.0",
     "less": "^4.1.1",

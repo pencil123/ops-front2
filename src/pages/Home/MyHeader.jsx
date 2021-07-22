@@ -3,7 +3,7 @@ import { Menu, Avatar } from "antd";
 import Icon from "@ant-design/icons";
 import { MenuUnfoldOutlined, MenuFoldOutlined } from "@ant-design/icons";
 import PropTypes from "prop-types";
-import { PanesContext } from "../../context/Panes";
+import { PanesContext } from "@/context/Panes";
 const SubMenu = Menu.SubMenu;
 export class MyHeader extends Component {
   /**

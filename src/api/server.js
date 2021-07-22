@@ -1,7 +1,4 @@
-import React from "react";
 import axios from "axios";
-import ReactDOM from 'react-dom';
-import {Spin } from 'antd';
 /**
  * @params method {string} 方法名
  * @params url {string} 请求地址  例如：/login 配合baseURL组成完整请求地址
@@ -15,28 +12,6 @@ import {Spin } from 'antd';
  * 其他更多拓展参看axios文档后 自行拓展
  * 注意：params中的数据会覆盖method url 参数，所以如果指定了这2个参数则不需要在params中带入
  */
-
-// 当前正在请求的数量
-let requestCount = 0
-// 显示loading
-function showLoading () {
-    if (requestCount === 0) {
-        var dom = document.createElement('div')
-        dom.setAttribute('id', 'loading')
-        document.body.appendChild(dom)
-        ReactDOM.render(<Spin  animation="border" variant="info" />, dom)
-    }
-    requestCount++
-}
-
-// 隐藏loading
-function hideLoading () {
-    requestCount--
-    if (requestCount === 0) {
-        document.body.removeChild(document.getElementById('loading'))
-    }
-}
-
 
 export default class Server {
   axios(method, url, data) {
@@ -53,11 +28,9 @@ export default class Server {
         },
       };
 
-
       axios.interceptors.request.use(
         (config) => {
           let token = localStorage.getItem("access_token");
-          showLoading()
           if (token) {
             config.headers["Access-Token"] = token;
             return config;
@@ -67,7 +40,6 @@ export default class Server {
           }
         },
         (error) => {
-            hideLoading()
           Promise.reject(error);
         }
       );
@@ -75,7 +47,6 @@ export default class Server {
 
       axios.interceptors.response.use(
         (response) => {
-            hideLoading()
           if (response.data.code === 401) {
             window.open("/login", "_self");
             return response;
@@ -84,11 +55,9 @@ export default class Server {
           }
         },
         (error) => {
-            hideLoading()
           Promise.reject(error);
         }
       );
-
 
       axios.request(_option).then(
         (res) => {
