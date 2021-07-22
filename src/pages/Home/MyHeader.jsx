@@ -4,6 +4,7 @@ import Icon from "@ant-design/icons";
 import { MenuUnfoldOutlined, MenuFoldOutlined } from "@ant-design/icons";
 import PropTypes from "prop-types";
 import { PanesContext } from "@/context/Panes";
+import Dashboard from "../Dashboard/Dashboard";
 const SubMenu = Menu.SubMenu;
 export class MyHeader extends Component {
   /**
@@ -19,6 +20,19 @@ export class MyHeader extends Component {
   //     logout(); //清空cookie
   //     this.props.history.push("/login");
   //   };
+  componentDidMount() {
+    this.context.updateState({
+      panes: [
+        {
+          name: "DashBoard",
+          key: "dashboard",
+          content: <Dashboard />,
+        },
+      ],
+      activeMenu: "dashboard",
+    });
+  }
+
   render() {
     const { user } = this.props;
     return (
