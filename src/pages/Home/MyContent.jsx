@@ -46,7 +46,7 @@ export class MyContent extends Component {
           {panes.length ? (
             <Tabs
               style={{ height: "100%" }}
-              tabBarStyle={{ marginBottom: 0 }}
+              tabBarStyle={{ marginBottom: 2, marginTop: 2 }}
               onEdit={this.onEdit}
               onChange={this.onChange}
               activeKey={activeMenu}

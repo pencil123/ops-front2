@@ -1,9 +1,10 @@
 import React, { Component } from "react";
 import DashBoardAPI from "@/api/dashboard";
-import { Descriptions, PageHeader, Select } from "antd";
+import { Descriptions, PageHeader, Select, Divider } from "antd";
 //import { Row, Col } from "antd";
 import SkywalkingAPI from "@/api/skywalking";
 import Topology from "./components/Topology";
+import "./dashboard.less";
 export class Dashboard extends Component {
   state = {
     userRecord: {},
@@ -97,44 +98,47 @@ export class Dashboard extends Component {
     const sCodeRecord = this.state.sCodeRecord;
     return (
       <>
-        <Descriptions
-          bordered
-          column={6}
-          title={
-            userRecord.applicationNum +
-            "个项目（" +
-            userRecord.nodeQuantity +
-            "台服务器）"
-          }
-        >
-          <Descriptions.Item label="CPU负载高：">
-            {userRecord.cpuHighUsage}
-          </Descriptions.Item>
-          <Descriptions.Item label="CPU负载正常：">
-            {userRecord.cpuNormalUsage}
-          </Descriptions.Item>
-          <Descriptions.Item label="CPU负载低：">
-            {userRecord.cpuLowUsage}
-          </Descriptions.Item>
-          <Descriptions.Item label="内存负载高：">
-            {userRecord.memoryHighUsage}
-          </Descriptions.Item>
-          <Descriptions.Item label="内存负载正常：">
-            {userRecord.memoryNormalUsage}
-          </Descriptions.Item>
-          <Descriptions.Item label="内存负载低：">
-            {userRecord.memoryLowUsage}
-          </Descriptions.Item>
-        </Descriptions>
-
         <PageHeader
-          title=" S码（项目选择）"
+          ghost={true}
+          subTitle={
+            userRecord.applicationNum +
+            "个项目 / " +
+            userRecord.nodeQuantity +
+            "台服务器"
+          }
+          title="项目和服务器信息概览"
+        >
+          <Descriptions bordered column={6}>
+            <Descriptions.Item label="CPU负载高：">
+              {userRecord.cpuHighUsage}
+            </Descriptions.Item>
+            <Descriptions.Item label="CPU负载正常：">
+              {userRecord.cpuNormalUsage}
+            </Descriptions.Item>
+            <Descriptions.Item label="CPU负载低：">
+              {userRecord.cpuLowUsage}
+            </Descriptions.Item>
+            <Descriptions.Item label="内存负载高：">
+              {userRecord.memoryHighUsage}
+            </Descriptions.Item>
+            <Descriptions.Item label="内存负载正常：">
+              {userRecord.memoryNormalUsage}
+            </Descriptions.Item>
+            <Descriptions.Item label="内存负载低：">
+              {userRecord.memoryLowUsage}
+            </Descriptions.Item>
+          </Descriptions>
+        </PageHeader>
+        <Divider orientation="right">分割线</Divider>
+        <PageHeader
+          title="选择项目"
+          className="sCodeCard"
           extra={[
             <Select
               key="1"
               showSearch
               value={this.state.sCodeSelectDefaultKey}
-              style={{ width: 200 }}
+              style={{ width: 200, float: "left" }}
               optionFilterProp="children"
               onChange={this.sCodeSelect}
               filterOption={(input, option) =>
