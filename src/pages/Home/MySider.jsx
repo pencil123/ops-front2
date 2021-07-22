@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import { PanesContext } from "../../context/Panes";
 import { tabs, menu } from "../tabs";
 import { createFromIconfontCN } from "@ant-design/icons";
-import { Menu } from "antd";
+import { Menu, Layout } from "antd";
+const { Sider } = Layout;
 const IconFont = createFromIconfontCN({
   scriptUrl: "//at.alicdn.com/t/font_2690980_nx7hw0elzf.js",
 });
@@ -66,31 +67,43 @@ export class MySider extends Component {
     this.setState({ openKeys: [latestOpenKey] });
   };
 
+  onCollapse = (collapsed) => {
+    this.context.updateState({ collapsed }, () => {
+      console.log(this.state);
+    });
+  };
+
   render() {
     const { activeMenu, theme } = this.context;
     return (
-      <div className={`my-sider`}>
-        <div className={`sider-menu-logo`}>
-          <a href="/" rel="noopener noreferrer">
-            <img
-              // eslint-disable-next-line no-undef
-              src={require("../../assets/images/logo.png").default}
-              alt="Logo"
-              style={{ margin: "30px auto", display: "block" }}
-            />
-          </a>
+      <Sider
+        collapsible
+        collapsed={this.context.collapsed}
+        onCollapse={this.onCollapse}
+      >
+        <div className={`my-sider`}>
+          <div className={`sider-menu-logo`}>
+            <a href="/" rel="noopener noreferrer">
+              <img
+                // eslint-disable-next-line no-undef
+                src={require("../../assets/images/logo.png").default}
+                alt="Logo"
+                style={{ margin: "30px auto", display: "block" }}
+              />
+            </a>
+          </div>
+          <Menu
+            theme={theme}
+            mode="inline"
+            selectedKeys={[activeMenu]}
+            style={{ paddingTop: 16 }}
+            openKeys={this.state.openKeys}
+            onOpenChange={this.onOpenChange}
+          >
+            {this.renderMenu(menu)}
+          </Menu>
         </div>
-        <Menu
-          theme={theme}
-          mode="inline"
-          selectedKeys={[activeMenu]}
-          style={{ paddingTop: 16 }}
-          openKeys={this.state.openKeys}
-          onOpenChange={this.onOpenChange}
-        >
-          {this.renderMenu(menu)}
-        </Menu>
-      </div>
+      </Sider>
     );
   }
 }

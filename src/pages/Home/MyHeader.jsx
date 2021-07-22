@@ -34,6 +34,7 @@ export class MyHeader extends Component {
           <div style={styles.headerItem}>
             <Menu mode="horizontal" selectable={false}>
               <SubMenu
+                key={"avatarMenu"}
                 title={
                   <div style={styles.avatarBox}>
                     <Avatar size="small" src={user.avatar} />

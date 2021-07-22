@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import DashBoardAPI from "@/api/dashboard";
 import { Descriptions, PageHeader, Select } from "antd";
-import { Row, Col } from "antd";
+//import { Row, Col } from "antd";
 import SkywalkingAPI from "@/api/skywalking";
 import Topology from "./components/Topology";
 export class Dashboard extends Component {
@@ -209,13 +209,13 @@ export class Dashboard extends Component {
             title={this.state.topoTitle}
           />
         </PageHeader>
-        <Row>
+        {/* <Row>
           <Col span={8}>
             <iframe
               title="CPU"
               width="100%"
               height="370"
-              sandbox="allow-scripts allow-forms allow-same-origin"
+              sandbox="allow-scripts allow-forms"
               src={this.state.cpuUrlString}
             ></iframe>
           </Col>
@@ -224,7 +224,7 @@ export class Dashboard extends Component {
               title="mem"
               width="100%"
               height="370"
-              sandbox="allow-scripts allow-forms allow-same-origin"
+              sandbox="allow-scripts allow-forms"
               src={this.state.memUrlString}
             ></iframe>
           </Col>
@@ -233,7 +233,7 @@ export class Dashboard extends Component {
               title="disk"
               width="100%"
               height="370"
-              sandbox="allow-scripts allow-forms allow-same-origin"
+              sandbox="allow-scripts allow-forms"
               src={this.state.diskUrlString}
             ></iframe>
           </Col>
@@ -244,11 +244,11 @@ export class Dashboard extends Component {
               title="warn"
               width="100%"
               height="370"
-              sandbox="allow-scripts allow-forms allow-same-origin"
+              sandbox="allow-scripts allow-forms"
               src={this.state.warnUrlString}
             ></iframe>
           </Col>
-        </Row>
+        </Row> */}
       </>
     );
   }
