@@ -36,7 +36,10 @@ export class MyHeader extends Component {
   render() {
     const { user } = this.props;
     return (
-      <div style={{ background: "#fff", padding: "0 16px" }}>
+      <div
+        style={{ background: "#fff", padding: "0 16px" }}
+        className="myHeader"
+      >
         <div style={{ fontSize: 18, display: "inline", lineHeight: "64px" }}>
           {this.context.collapsed ? (
             <MenuUnfoldOutlined onClick={() => this.toggleCollapsed()} />
@@ -44,19 +47,27 @@ export class MyHeader extends Component {
             <MenuFoldOutlined onClick={() => this.toggleCollapsed()} />
           )}
         </div>
-        <div style={styles.headerRight}>
-          <div style={styles.headerItem}>
-            <Menu mode="horizontal" selectable={false}>
+        <div className="headerRight">
+          <div className="headerItem">
+            <Menu
+              mode="horizontal"
+              selectable={false}
+              className="headerHorizontal"
+            >
               <SubMenu
                 key={"avatarMenu"}
                 title={
-                  <div style={styles.avatarBox}>
+                  <div className="avatarBox">
                     <Avatar size="small" src={user.avatar} />
                     &nbsp;<span>{user.username}</span>
                   </div>
                 }
               >
-                <Menu.Item key={2} onClick={this.onLogout}>
+                <Menu.Item
+                  key={2}
+                  onClick={this.onLogout}
+                  className="logoutButton"
+                >
                   <Icon type="logout" />
                   退出登录
                 </Menu.Item>
@@ -69,23 +80,6 @@ export class MyHeader extends Component {
   }
 }
 
-const styles = {
-  headerRight: {
-    float: "right",
-    display: "flex",
-    height: 64,
-    marginRight: 50,
-  },
-  headerItem: {
-    display: "flex",
-    alignItems: "center",
-    padding: "0 20px",
-  },
-  avatarBox: {
-    display: "flex",
-    alignItems: "center",
-  },
-};
 MyHeader.propTypes = {
   user: PropTypes.object,
 };

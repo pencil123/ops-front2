@@ -1,19 +1,69 @@
-.ant-layout-sider,.ant-layout-sider-trigger{
-    background:#0d325e !important;
-}
-.ant-menu{
+//sidler start
+.mySiderClass,.ant-menu-submenu-placement-rightTop {
     background: #0d325e !important;
-    color: white !important;
+    .ant-layout-sider-trigger,
+    .ant-menu-vertical {
+        background: #0d325e !important;
+    }
+    .ant-menu {
+        background: #0d325e !important;
+        color: white !important;
+    }
+
+    .ant-menu-item-selected {
+        background: #005fb3 !important;
+    }
+
+    .ant-menu-item-only-child {
+        color: white !important;
+    }
+
+    .ant-menu-submenu-arrow {
+        color: white !important;
+    }
+
+    .ant-menu-submenu-popup>.ant-menu {
+        background: #0d325e !important;
+    }
+
 }
 
-.ant-menu-item-selected{
-    background: #005fb3 !important;
-}
+// sidler End
+// header start
+.myHeader {
+    .headerRight {
+        float: right;
+        display: flex;
+        height: 64px;
+        margin-right: 50px;
 
-.ant-menu-item-only-child{
-    color: white !important;
-}
+        .headerItem {
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
 
-.ant-menu-submenu-arrow{
-    color: white !important;
+            ul {
+                background: white !important;
+            }
+        }
+    }
+
+    .avatarBox {
+        display: flex;
+        align-items: center;
+
+        span {
+            color: rgba(0, 0, 0, 0.85);
+            font-weight: bold;
+        }
+    }
+
+    .ant-menu-vertical {
+        background: white !important;
+
+        .logoutButton {
+            color: rgba(0, 0, 0, 0.85);
+
+        }
+    }
 }

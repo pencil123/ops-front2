@@ -77,6 +77,7 @@ export class MySider extends Component {
     const { activeMenu, theme } = this.context;
     return (
       <Sider
+        className="mySiderClass"
         collapsible
         collapsed={this.context.collapsed}
         onCollapse={this.onCollapse}
