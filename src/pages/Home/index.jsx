@@ -1,7 +1,7 @@
 import React from "react";
 import { Layout } from "antd";
 import { PanesContext, PanesActions } from "../../context/Panes";
-
+import "./home.less";
 import MySider from "./MySider";
 import MyContent from "./MyContent";
 import MyFooter from "./MyFooter";
