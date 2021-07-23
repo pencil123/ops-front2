@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Descriptions } from "antd";
 import PropTypes from "prop-types";
-import { Switch } from "antd";
+import { Switch, PageHeader } from "antd";
 
 export class DomainInfoDesc extends Component {
   state = {
@@ -17,11 +17,11 @@ export class DomainInfoDesc extends Component {
     let result = "";
     for (let httptype in httpType) {
       if (record[httptype] === 0) {
-        result = `${result}<a class='text-secondary' target='_blank' href=${httpType[httptype]}${record.domain}>${httptype}</a>`;
+        result = `${result}<a style="color:#000000;padding:5px;font-weight:bold" target='_blank' href=${httpType[httptype]}${record.domain}>${httptype}</a>`;
       } else if (record[httptype] === 1) {
-        result = `${result}<a class='text-danger' target='_blank' href=${httpType[httptype]}${record.domain}>${httptype}</a>`;
+        result = `${result}<a style="color:#cf1322;padding:5px;font-weight:bold" target='_blank' href=${httpType[httptype]}${record.domain}>${httptype}</a>`;
       } else if (record[httptype] === 2) {
-        result = `${result}<a class='text-primary' target='_blank'  href=${httpType[httptype]}${record.domain}>${httptype}</a>`;
+        result = `${result}<a style="color:#096dd9;padding:5px;font-weight:bold" target='_blank'  href=${httpType[httptype]}${record.domain}>${httptype}</a>`;
       }
     }
     return { __html: result };
@@ -30,14 +30,25 @@ export class DomainInfoDesc extends Component {
   render() {
     const domainInfo = this.props.domainInfo;
     return (
-      <>
-        <div className="DomainInfoHeader">
-          <span>{"域名 " + domainInfo.domain + " 详情"}</span>
-          <Switch defaultChecked onChange={this.props.detectableState} />
-          <button onClick={() => this.props.update(this.props.domainInfo)}>
-            更新
-          </button>
-        </div>
+      <PageHeader
+        title={"域名 " + domainInfo.domain + " 详情"}
+        style={{ width: "100%" }}
+        className="ICPDescCard"
+        extra={
+          <div className="sCodeSelect">
+            <Switch
+              defaultChecked
+              checkedChildren="检查"
+              unCheckedChildren="关闭"
+              onChange={this.props.detectableState}
+              style={{ marginTop: 7 }}
+            />
+            <button onClick={() => this.props.update(this.props.domainInfo)}>
+              更新
+            </button>
+          </div>
+        }
+      >
         <Descriptions bordered>
           <Descriptions.Item label="公司">
             {domainInfo.siteName}
@@ -68,7 +79,7 @@ export class DomainInfoDesc extends Component {
             <div dangerouslySetInnerHTML={this.webStatus(domainInfo)}></div>
           </Descriptions.Item>
         </Descriptions>
-      </>
+      </PageHeader>
     );
   }
 }

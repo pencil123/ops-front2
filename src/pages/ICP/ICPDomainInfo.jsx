@@ -7,6 +7,7 @@ import ManagerLog from "./components/ManagerLog";
 import DomainAPI from "@/api/domain_api";
 import LogAPI from "@/api/log_api";
 import IcpAPI from "@/api/icp_api";
+import "./icp.less";
 import { Tabs, Modal, Form, Input } from "antd";
 const { TabPane } = Tabs;
 export class ICPDomainInfo extends Component {
@@ -161,12 +162,17 @@ export class ICPDomainInfo extends Component {
             </Form.Item>
           </Form>
         </Modal>
+
         <DomainInfoDesc
           domainInfo={this.state.ICPDomain}
           detectableState={this.detectableState}
           update={this.ICPDomainUpdate}
         />
-        <Tabs defaultActiveKey="1" onChange={this.callback}>
+        <Tabs
+          defaultActiveKey="1"
+          onChange={this.callback}
+          className="ContentPadding"
+        >
           <TabPane tab="二级域名" key="subDomain">
             <SubDomainList
               records={this.state.subDomains}
