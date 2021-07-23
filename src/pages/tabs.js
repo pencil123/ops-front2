@@ -1,9 +1,8 @@
 import React from "react";
 import AllMetricDetails from "@/pages/Prom/AllMetricDetails";
 import AnalysedMetricData from "@/pages/Prom/AnalysedMetricData";
-import ServerManager from "@/pages/Node/ServerManager";
+import ServerManager from "@/pages/User/ServerManager";
 import ManagerList from "@/pages/User/ManagerList";
-import ManagerAdd from "@/pages/User/ManagerAdd";
 import ICPDomain from "./ICP/ICPDomain";
 import Dashboard from "./Dashboard/Dashboard";
 
@@ -67,11 +66,6 @@ const menu = [
         icon: "icon-submenu",
         key: "ManagerList",
       },
-      {
-        name: "添加管理员",
-        icon: "icon-submenu",
-        key: "ManagerAdd",
-      },
     ],
   },
 ];
@@ -80,7 +74,6 @@ const tabs = {
   dashboard: <Dashboard />,
   ServerManager: <ServerManager />,
   ManagerList: <ManagerList />,
-  ManagerAdd: <ManagerAdd />,
   AllMetricDetails: <AllMetricDetails />,
   AnalysedMetricData: <AnalysedMetricData />,
   ValidICPDomain: <ICPDomain checkType="success" />,

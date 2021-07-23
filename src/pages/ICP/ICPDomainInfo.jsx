@@ -113,7 +113,6 @@ export class ICPDomainInfo extends Component {
   };
 
   ICPDomainUpdate = (DomainInfos) => {
-    console.log(DomainInfos);
     this.setState({ visible: true }, () => {
       this.icpFromRef.current.setFieldsValue({
         siteLicense: DomainInfos.siteLicense,

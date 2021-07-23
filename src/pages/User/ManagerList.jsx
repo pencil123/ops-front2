@@ -1,9 +1,11 @@
 import React, { Component } from "react";
-import { Table, Modal } from "antd";
+import { Table, Modal, Form, Input, PageHeader } from "antd";
 import AdminAPI from "@/api/admin_api";
 export class ManagerList extends Component {
+  managerFromRef = React.createRef();
   state = {
     visibleDel: false,
+    visibleAdd: false,
     currentPage: "",
     records: [],
     err: "",
@@ -20,14 +22,22 @@ export class ManagerList extends Component {
     });
   };
   managerDelete = (userCode) => {
-    this.setState({ visible: true, delUserCode: userCode });
+    this.setState({ visibleDel: true, delUserCode: userCode });
   };
-  handleCancel = () => {
-    this.setState({ visible: false });
+  handleDelCancel = () => {
+    this.setState({ visibleDel: false });
   };
-  handleSubmit = async () => {
+  handleDelSubmit = async () => {
     await AdminAPI.adminDelete({ userCode: this.state.delUserCode });
-    this.setState({ visible: false });
+    this.setState({ visibleDel: false });
+    this.initData();
+  };
+  handleAddCancel = () => {
+    this.setState({ visibleAdd: false });
+  };
+  handleAddSubmit = async () => {
+    await AdminAPI.adminAdd(this.managerFromRef.current.getFieldsValue());
+    this.setState({ visibleAdd: false });
     this.initData();
   };
   render() {
@@ -58,13 +68,44 @@ export class ManagerList extends Component {
       <>
         <Modal
           title="管理员账号删除"
-          visible={this.state.visible}
-          onOk={this.handleSubmit}
-          onCancel={this.handleCancel}
+          visible={this.state.visibleDel}
+          onOk={this.handleDelSubmit}
+          onCancel={this.handleDelCancel}
         >
           是否要删除管理员账号： <b>{this.state.delUserCode}</b>？
         </Modal>
+        <Modal
+          title="添加新的管理员"
+          visible={this.state.visibleAdd}
+          onOk={this.handleAddSubmit}
+          onCancel={this.handleAddCancel}
+        >
+          <Form
+            ref={this.managerFromRef}
+            labelCol={{ span: 8 }}
+            wrapperCol={{ span: 16 }}
+          >
+            <Form.Item label="用户ID/工号" name="userCode">
+              <Input />
+            </Form.Item>
+          </Form>
+        </Modal>
+        <PageHeader
+          title="管理员列表"
+          subTitle="系统管理员权限独立，不和其他系统相关"
+          style={{ width: "100%" }}
+          extra={
+            <button
+              onClick={() => {
+                this.setState({ visibleAdd: true });
+              }}
+            >
+              添加管理员
+            </button>
+          }
+        ></PageHeader>
         <Table
+          className="ContentPadding"
           rowKey="userCode"
           loading={this.state.loading}
           pagination={{

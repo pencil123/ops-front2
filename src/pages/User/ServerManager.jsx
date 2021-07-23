@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import NodeAPI from "@/api/node_api";
-import { Table, Button } from "antd";
+import { Table, Button, PageHeader } from "antd";
 import { Form, Modal, Input } from "antd";
 import { PanesContext } from "@/context/Panes";
 
@@ -162,33 +162,41 @@ export class ServerManager extends Component {
             </Form.Item>
           </Form>
         </Modal>
-        <Form
-          name="basic"
-          onFinish={this.formSubmit}
-          layout="inline"
-          size="large"
-        >
-          <Form.Item name="hostIp">
-            <Input
-              placeholder="IP搜索/多节点以逗号分隔"
-              onChange={this.ipSearchChange}
-              disabled={this.state.switch === "scodeSearch"}
-            />
-          </Form.Item>
-          <Form.Item name="applicationId">
-            <Input
-              placeholder="S码搜索"
-              onChange={this.sCodeSearchChange}
-              disabled={this.state.switch === "ipSearch"}
-            />
-          </Form.Item>
-          <Form.Item>
-            <Button type="primary" htmlType="submit">
-              Search
-            </Button>
-          </Form.Item>
-        </Form>
+        <PageHeader
+          title="服务器搜索"
+          subTitle="搜索条件中服务器IP和S码同时只能选择一个"
+          style={{ width: "100%" }}
+          extra={
+            <Form
+              name="basic"
+              onFinish={this.formSubmit}
+              layout="inline"
+              size="large"
+            >
+              <Form.Item name="hostIp">
+                <Input
+                  placeholder="IP搜索/多节点以逗号分隔"
+                  onChange={this.ipSearchChange}
+                  disabled={this.state.switch === "scodeSearch"}
+                />
+              </Form.Item>
+              <Form.Item name="applicationId">
+                <Input
+                  placeholder="S码搜索"
+                  onChange={this.sCodeSearchChange}
+                  disabled={this.state.switch === "ipSearch"}
+                />
+              </Form.Item>
+              <Form.Item>
+                <Button type="primary" htmlType="submit">
+                  Search
+                </Button>
+              </Form.Item>
+            </Form>
+          }
+        ></PageHeader>
         <Table
+          className="ContentPadding"
           rowKey="hostIp"
           onChange={this.pageTurn}
           loading={this.state.loading}
