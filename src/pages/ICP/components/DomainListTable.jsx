@@ -64,7 +64,11 @@ export class DomainListTable extends Component {
         title: "备案状态",
         dataIndex: "icpState",
         render: (text) => {
-          return text ? "已备案" : "未备案";
+          return text ? (
+            <span style={{ color: "#096dd9" }}>已备案</span>
+          ) : (
+            <span style={{ color: "#cf1322" }}>未备案</span>
+          );
         },
       },
       {
@@ -74,11 +78,11 @@ export class DomainListTable extends Component {
           let result = "";
           for (let httptype in httpType) {
             if (row[httptype] === 0) {
-              result = `${result}<a class='text-secondary' target='_blank' href=${httpType[httptype]}${row.domain}>${httptype}</a>`;
+              result = `${result}<a style="color:#000000;padding:5px;font-weight:bold" target='_blank' href=${httpType[httptype]}${row.domain}>${httptype}</a>`;
             } else if (row[httptype] === 1) {
-              result = `${result}<a class='text-danger' target='_blank' href=${httpType[httptype]}${row.domain}>${httptype}</a>`;
+              result = `${result}<a style="color:#cf1322;padding:5px;font-weight:bold" target='_blank' href=${httpType[httptype]}${row.domain}>${httptype}</a>`;
             } else if (row[httptype] === 2) {
-              result = `${result}<a class='text-primary' target='_blank'  href=${httpType[httptype]}${row.domain}>${httptype}</a>`;
+              result = `${result}<a style="color:#096dd9;padding:5px;font-weight:bold" target='_blank'  href=${httpType[httptype]}${row.domain}>${httptype}</a>`;
             }
           }
           return <div dangerouslySetInnerHTML={{ __html: result }}></div>;
