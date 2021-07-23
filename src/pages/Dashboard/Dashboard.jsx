@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import DashBoardAPI from "@/api/dashboard";
-import { Descriptions, PageHeader, Select, Divider } from "antd";
-//import { Row, Col } from "antd";
+import { Descriptions, PageHeader, Select, Divider, Row, Col } from "antd";
 import SkywalkingAPI from "@/api/skywalking";
 import Topology from "./components/Topology";
 import "./dashboard.less";
@@ -133,53 +132,35 @@ export class Dashboard extends Component {
         <PageHeader
           title="选择项目"
           className="sCodeCard"
-          extra={[
-            <Select
-              key="1"
-              showSearch
-              value={this.state.sCodeSelectDefaultKey}
-              style={{ width: 200, float: "left" }}
-              optionFilterProp="children"
-              onChange={this.sCodeSelect}
-              filterOption={(input, option) =>
-                (Array.isArray(option.props.children)
-                  ? option.props.children.join("")
-                  : option.props.children
-                )
-                  .toLowerCase()
-                  .indexOf(input.toLowerCase()) >= 0
-              }
-            >
-              {this.state.sCodeList.map((sCode) => {
-                return (
-                  <Option key={sCode.applicationId} value={sCode.applicationId}>
-                    {sCode.applicationId}/{sCode.applicationName}
-                  </Option>
-                );
-              })}
-            </Select>,
-          ]}
-        >
-          <Descriptions size="small" column={7}>
-            <Descriptions.Item label="CPU负载高：">
-              {sCodeRecord.cpuHighUsage}
-            </Descriptions.Item>
-            <Descriptions.Item label="CPU负载正常：">
-              {sCodeRecord.cpuNormalUsage}
-            </Descriptions.Item>
-            <Descriptions.Item label="CPU负载低：">
-              {sCodeRecord.cpuLowUsage}
-            </Descriptions.Item>
-            <Descriptions.Item label="内存负载高：">
-              {sCodeRecord.memoryHighUsage}
-            </Descriptions.Item>
-            <Descriptions.Item label="内存负载正常：">
-              {sCodeRecord.memoryNormalUsage}
-            </Descriptions.Item>
-            <Descriptions.Item label="内存负载低：">
-              {sCodeRecord.memoryLowUsage}
-            </Descriptions.Item>
-            <Descriptions.Item>
+          extra={
+            <div className="sCodeSelect">
+              <Select
+                key="1"
+                showSearch
+                value={this.state.sCodeSelectDefaultKey}
+                style={{ width: 270 }}
+                optionFilterProp="children"
+                onChange={this.sCodeSelect}
+                filterOption={(input, option) =>
+                  (Array.isArray(option.props.children)
+                    ? option.props.children.join("")
+                    : option.props.children
+                  )
+                    .toLowerCase()
+                    .indexOf(input.toLowerCase()) >= 0
+                }
+              >
+                {this.state.sCodeList.map((sCode) => {
+                  return (
+                    <Option
+                      key={sCode.applicationId}
+                      value={sCode.applicationId}
+                    >
+                      {sCode.applicationId}/{sCode.applicationName}
+                    </Option>
+                  );
+                })}
+              </Select>
               <Select
                 key="1"
                 showSearch
@@ -205,6 +186,27 @@ export class Dashboard extends Component {
                   );
                 })}
               </Select>
+            </div>
+          }
+        >
+          <Descriptions size="small" column={6}>
+            <Descriptions.Item label="CPU负载高：">
+              {sCodeRecord.cpuHighUsage}
+            </Descriptions.Item>
+            <Descriptions.Item label="CPU负载正常：">
+              {sCodeRecord.cpuNormalUsage}
+            </Descriptions.Item>
+            <Descriptions.Item label="CPU负载低：">
+              {sCodeRecord.cpuLowUsage}
+            </Descriptions.Item>
+            <Descriptions.Item label="内存负载高：">
+              {sCodeRecord.memoryHighUsage}
+            </Descriptions.Item>
+            <Descriptions.Item label="内存负载正常：">
+              {sCodeRecord.memoryNormalUsage}
+            </Descriptions.Item>
+            <Descriptions.Item label="内存负载低：">
+              {sCodeRecord.memoryLowUsage}
             </Descriptions.Item>
           </Descriptions>
           <Topology
@@ -213,13 +215,13 @@ export class Dashboard extends Component {
             title={this.state.topoTitle}
           />
         </PageHeader>
-        {/* <Row>
+        <Row>
           <Col span={8}>
             <iframe
               title="CPU"
               width="100%"
               height="370"
-              sandbox="allow-scripts allow-forms"
+              sandbox="allow-scripts allow-forms allow-same-origin"
               src={this.state.cpuUrlString}
             ></iframe>
           </Col>
@@ -228,7 +230,7 @@ export class Dashboard extends Component {
               title="mem"
               width="100%"
               height="370"
-              sandbox="allow-scripts allow-forms"
+              sandbox="allow-scripts allow-forms allow-same-origin"
               src={this.state.memUrlString}
             ></iframe>
           </Col>
@@ -237,7 +239,7 @@ export class Dashboard extends Component {
               title="disk"
               width="100%"
               height="370"
-              sandbox="allow-scripts allow-forms"
+              sandbox="allow-scripts allow-forms allow-same-origin"
               src={this.state.diskUrlString}
             ></iframe>
           </Col>
@@ -248,11 +250,11 @@ export class Dashboard extends Component {
               title="warn"
               width="100%"
               height="370"
-              sandbox="allow-scripts allow-forms"
+              sandbox="allow-scripts allow-forms allow-same-origin"
               src={this.state.warnUrlString}
             ></iframe>
           </Col>
-        </Row> */}
+        </Row>
       </>
     );
   }
