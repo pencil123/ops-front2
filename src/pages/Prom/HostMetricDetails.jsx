@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Row, Col } from "antd";
+import { Row, Col, PageHeader } from "antd";
 import MetricAPI from "@/api/metric_api";
 import MetricListTable from "./components/metricListTable";
 
@@ -42,6 +42,10 @@ export class HostMetricDetails extends Component {
   render() {
     return (
       <Row id="MetricTable">
+        <PageHeader
+          title={"服务器节点: " + this.state.hostIp}
+          style={{ width: "100%" }}
+        />
         <Col>
           <MetricListTable
             loading={this.state.loading}

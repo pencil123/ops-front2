@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Row, Col } from "antd";
+import { Row, Col, PageHeader } from "antd";
 import MetricAPI from "@/api/metric_api";
 import MetricSearchCard from "./components/metricSearchCard";
 import MetricListTable from "./components/metricListTable";
@@ -54,9 +54,15 @@ export class AnalysedMetricData extends Component {
     return (
       <>
         <Row id="SearchTab">
-          <Col>
-            <MetricSearchCard searchSubmit={this.searchSubmit} />
-          </Col>
+          <PageHeader
+            title="服务器指标数据搜索"
+            subTitle="搜索条件中服务器IP和S码同时只能选择一个"
+            style={{ width: "100%" }}
+          >
+            <Col>
+              <MetricSearchCard searchSubmit={this.searchSubmit} />
+            </Col>
+          </PageHeader>
         </Row>
         <Row id="MetricTable">
           <Col>

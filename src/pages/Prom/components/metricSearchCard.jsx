@@ -57,31 +57,25 @@ export class MetricSearchCard extends Component {
         layout="inline"
         size="large"
       >
-        <Form.Item name="ipHost">
+        <Form.Item name="ipHost" label="服务器IP">
           <Input
             placeholder="IP搜索/多节点以逗号分隔"
             onChange={this.ipSearchChange}
             disabled={this.state.switch === "scodeSearch"}
           />
         </Form.Item>
-        <Form.Item name="sCode">
+        <Form.Item name="sCode" label="项目S码">
           <Input
             placeholder="S码搜索"
             onChange={this.sCodeSearchChange}
             disabled={this.state.switch === "ipSearch"}
           />
         </Form.Item>
-        <Form.Item name="fromDateChange">
-          <DatePicker
-            placeholder="开始日期（0点）"
-            onChange={this.fromDateChange}
-          />
+        <Form.Item name="fromDateChange" label="开始日期">
+          <DatePicker placeholder="0点" onChange={this.fromDateChange} />
         </Form.Item>
-        <Form.Item name="toDateChange">
-          <DatePicker
-            placeholder="结束日期（24点）"
-            onChange={this.toDateChange}
-          />
+        <Form.Item name="toDateChange" label="结束日期">
+          <DatePicker placeholder="24点" onChange={this.toDateChange} />
         </Form.Item>
         <Form.Item>
           <Button type="primary" htmlType="submit">
