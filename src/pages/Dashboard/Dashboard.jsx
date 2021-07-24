@@ -26,18 +26,23 @@ export class Dashboard extends Component {
   }
 
   initData = async () => {
-    let res = await DashBoardAPI.userDashBoard();
-    if (res.data.applicationVOList.length != 0) {
-      this.setState(
-        {
-          userRecord: res.data,
-          sCodeList: res.data.applicationVOList,
-          sCodeSelectDefaultKey: res.data.applicationVOList[0].applicationId,
-        },
-        () => {
-          this.sCodeSelect(res.data.applicationVOList[0].applicationId);
-        }
-      );
+    try {
+      let res = await DashBoardAPI.userDashBoard();
+      console.log("page recevie:", res);
+      if (res.data.applicationVOList.length != 0) {
+        this.setState(
+          {
+            userRecord: res.data,
+            sCodeList: res.data.applicationVOList,
+            sCodeSelectDefaultKey: res.data.applicationVOList[0].applicationId,
+          },
+          () => {
+            this.sCodeSelect(res.data.applicationVOList[0].applicationId);
+          }
+        );
+      }
+    } catch (error) {
+      console.error("dashborad page:", error);
     }
   };
   sCodeSelect = async (sCode) => {

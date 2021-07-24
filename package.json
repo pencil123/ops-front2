@@ -18,7 +18,7 @@
     "web-vitals": "^1.1.2"
   },
   "scripts": {
-	"start": "dotenv -e src/config/.env.development  react-app-rewired start",
+    "start": "dotenv -e src/config/.env.development  react-app-rewired start",
     "build": "react-scripts build",
     "test": "react-app-rewired test",
     "start:dev": "dotenv -e src/config/.env.development  react-app-rewired start",

@@ -1,4 +1,7 @@
 import axios from "axios";
+// import ReactDOM from "react-dom";
+// import React from "react";
+// import { Modal } from "antd";
 /**
  * @params method {string} 方法名
  * @params url {string} 请求地址  例如：/login 配合baseURL组成完整请求地址
@@ -12,6 +15,31 @@ import axios from "axios";
  * 其他更多拓展参看axios文档后 自行拓展
  * 注意：params中的数据会覆盖method url 参数，所以如果指定了这2个参数则不需要在params中带入
  */
+
+// // 当前正在请求的数量
+// let errorModalVisible = false;
+// // 请求异常
+// function showRequestErrorModal() {
+//   //  if (!errorModalVisible) {
+//   var dom = document.createElement("div");
+//   dom.setAttribute("id", "requestError");
+//   document.body.appendChild(dom);
+//   ReactDOM.render(
+//     <Modal
+//       title="Basic Modal"
+//       visible={errorModalVisible}
+//       onOk={() => {
+//         errorModalVisible = true;
+//       }}
+//     >
+//       <p>Some contents...</p>
+//       <p>Some contents...</p>
+//       <p>Some contents...</p>
+//     </Modal>,
+//     dom
+//   );
+//   //}
+// }
 
 export default class Server {
   axios(method, url, data) {
@@ -44,7 +72,6 @@ export default class Server {
         }
       );
 
-
       axios.interceptors.response.use(
         (response) => {
           if (response.data.code === 401) {
@@ -55,17 +82,25 @@ export default class Server {
           }
         },
         (error) => {
+          console.log("axios.interceptors.response:", error);
           Promise.reject(error);
         }
       );
 
       axios.request(_option).then(
         (res) => {
-          resolve(
-            typeof res.data === "object" ? res.data : JSON.parse(res.data)
-          );
+          console.log("_request res:", res);
+          if (res) {
+            resolve(
+              typeof res.data === "object" ? res.data : JSON.parse(res.data)
+            );
+          } else {
+            console.log("reject error:", res);
+            reject(res);
+          }
         },
         (error) => {
+          console.log("_request error res:", error);
           if (error.response) {
             reject(error.response.data);
           } else {
@@ -73,6 +108,9 @@ export default class Server {
           }
         }
       );
+      // .catch((error) => {
+      //   console.log("axios catch:", error);
+      // });
     });
   }
 }
