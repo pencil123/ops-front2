@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { PanesContext } from "../../context/Panes";
 import { tabs, menu } from "../tabs";
+import AuthAPI from "@/api/auth_api";
 import { createFromIconfontCN } from "@ant-design/icons";
 import { Menu, Layout } from "antd";
 const { Sider } = Layout;
@@ -10,6 +11,25 @@ const IconFont = createFromIconfontCN({
 export class MySider extends Component {
   state = {
     openKeys: "",
+  };
+  componentDidMount() {
+    this.initRole();
+  }
+  initRole = async () => {
+    if (!localStorage.getItem("access_token")) {
+      return;
+    }
+    let isManager = sessionStorage.getItem("isManager");
+    if (isManager === "undefined" || isManager === null) {
+      let result = await AuthAPI.userRole();
+      isManager = result.data;
+      sessionStorage.setItem("isManager", isManager);
+      this.initRole();
+    }
+    if (isManager === "false") {
+      menu.pop();
+      console.log("侧边栏列表：", menu);
+    }
   };
   /**
    * 生成侧边栏菜单

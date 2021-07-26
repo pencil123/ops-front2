@@ -48,27 +48,29 @@ export class Dashboard extends Component {
   sCodeSelect = async (sCode) => {
     this.topologyRequest(sCode);
     let res = await DashBoardAPI.sCodeDashBoard({ applicationId: sCode });
-    this.setState({ sCodeRecord: res.data, ipList: res.data.ipList });
-    let varIpString = res.data.ipList.join("&var-ip=");
-    let cpuUrlString =
-      "https://grafana-ops.haier.net/d/oslinux001/linux?viewPanel=6&orgId=1&kiosk&var-ip=" +
-      varIpString;
-    let memUrlString =
-      "https://grafana-ops.haier.net/d/oslinux001/linux?viewPanel=8&orgId=1&kiosk&var-ip=" +
-      varIpString;
-    let diskUrlString =
-      "https://grafana-ops.haier.net/d/oslinux001/linux?viewPanel=10&orgId=1&kiosk&var-ip=" +
-      varIpString;
-    let warnUrlString =
-      "https://grafana-ops.haier.net/d/oslinux001/linux?viewPanel=12&orgId=1&kiosk&var-ip=" +
-      varIpString;
-    this.setState({
-      cpuUrlString,
-      memUrlString,
-      diskUrlString,
-      warnUrlString,
-      iptarget: res.data.ipList[0],
-    });
+    if (res.data.ipList != null) {
+      this.setState({ sCodeRecord: res.data, ipList: res.data.ipList });
+      let varIpString = res.data.ipList.join("&var-ip=");
+      let cpuUrlString =
+        "https://grafana-ops.haier.net/d/oslinux001/linux?viewPanel=6&orgId=1&kiosk&var-ip=" +
+        varIpString;
+      let memUrlString =
+        "https://grafana-ops.haier.net/d/oslinux001/linux?viewPanel=8&orgId=1&kiosk&var-ip=" +
+        varIpString;
+      let diskUrlString =
+        "https://grafana-ops.haier.net/d/oslinux001/linux?viewPanel=10&orgId=1&kiosk&var-ip=" +
+        varIpString;
+      let warnUrlString =
+        "https://grafana-ops.haier.net/d/oslinux001/linux?viewPanel=12&orgId=1&kiosk&var-ip=" +
+        varIpString;
+      this.setState({
+        cpuUrlString,
+        memUrlString,
+        diskUrlString,
+        warnUrlString,
+        iptarget: res.data.ipList[0],
+      });
+    }
   };
   topologyRequest = async (sCode) => {
     let res = await SkywalkingAPI.listApp({
@@ -140,7 +142,7 @@ export class Dashboard extends Component {
           extra={
             <div className="sCodeSelect">
               <Select
-                key="1"
+                key="sCodeSelect"
                 showSearch
                 value={this.state.sCodeSelectDefaultKey}
                 style={{ width: 270 }}
@@ -167,7 +169,7 @@ export class Dashboard extends Component {
                 })}
               </Select>
               <Select
-                key="1"
+                key="ipSelect"
                 showSearch
                 value={this.state.iptarget}
                 style={{ width: 200 }}
@@ -183,13 +185,14 @@ export class Dashboard extends Component {
                     .indexOf(input.toLowerCase()) >= 0
                 }
               >
-                {this.state.ipList.map((ipString) => {
-                  return (
-                    <Option key={ipString} value={ipString}>
-                      {ipString}
-                    </Option>
-                  );
-                })}
+                {this.state.ipList &&
+                  this.state.ipList.map((ipString) => {
+                    return (
+                      <Option key={ipString} value={ipString}>
+                        {ipString}
+                      </Option>
+                    );
+                  })}
               </Select>
             </div>
           }
