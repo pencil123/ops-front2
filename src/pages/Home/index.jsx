@@ -27,7 +27,7 @@ export class index extends React.Component {
           <Layout className="site-layout">
             <MyHeader
               user={{
-                username: "lyzhang",
+                username: "用户名",
                 avatar:
                   "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png",
               }}
