@@ -13,7 +13,7 @@ class Index extends Component {
       console.log("不存在用户的 access_token");
       this.initToken();
     } else {
-      window.open("/home", "_self");
+      window.open("/", "_self");
     }
   }
 
@@ -23,7 +23,7 @@ class Index extends Component {
     axios.get(fullUrl).then(
       (response) => {
         console.log("成功了-----", response.data.data);
-        const { client_id, redirect_uri, returnUrl } = response.data.data;
+        const { client_id, redirect_uri } = response.data.data;
         window.open(
           // eslint-disable-next-line no-undef
           process.env.REACT_APP_ACCOUINT_CENTER_DOMAIN +
@@ -32,7 +32,8 @@ class Index extends Component {
             "&redirect_uri=" +
             redirect_uri +
             "&returnUrl=" +
-            returnUrl +
+            // eslint-disable-next-line no-undef
+            process.env.REACT_APP_BASEURL +
             "/login",
           "_self"
         );
