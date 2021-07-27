@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Form, Input, Button, DatePicker } from "antd";
+import { Form, Input, Button, DatePicker, Col } from "antd";
 import PropTypes from "prop-types";
 
 export class MetricSearchCard extends Component {
@@ -57,37 +57,55 @@ export class MetricSearchCard extends Component {
         layout="inline"
         size="large"
       >
-        <Form.Item name="ipHost" label="服务器IP">
-          <Input
-            placeholder="IP搜索/多节点以逗号分隔"
-            onChange={this.ipSearchChange}
-            disabled={this.state.switch === "scodeSearch"}
-          />
-        </Form.Item>
-        <Form.Item name="sCode" label="项目S码">
-          <Input
-            placeholder="S码搜索"
-            onChange={this.sCodeSearchChange}
-            disabled={this.state.switch === "ipSearch"}
-          />
-        </Form.Item>
-        <Form.Item name="fromDateChange" label="开始日期">
-          <DatePicker placeholder="0点" onChange={this.fromDateChange} />
-        </Form.Item>
-        <Form.Item name="toDateChange" label="结束日期">
-          <DatePicker placeholder="24点" onChange={this.toDateChange} />
-        </Form.Item>
-        <Form.Item>
-          <Button type="primary" htmlType="submit">
-            Search
-          </Button>
-        </Form.Item>
+        <Col span={5}>
+          <Form.Item name="ipHost" label="服务器IP">
+            <Input
+              placeholder="多节点以逗号分隔"
+              onChange={this.ipSearchChange}
+              disabled={this.state.switch === "scodeSearch"}
+            />
+          </Form.Item>
+        </Col>
+        <Col span={5}>
+          <Form.Item name="sCode" label="项目S码">
+            <Input
+              placeholder="S码搜索"
+              onChange={this.sCodeSearchChange}
+              disabled={this.state.switch === "ipSearch"}
+            />
+          </Form.Item>
+        </Col>
+        <Col span={4}>
+          <Form.Item name="fromDateChange" label="开始日期">
+            <DatePicker placeholder="0点" onChange={this.fromDateChange} />
+          </Form.Item>
+        </Col>
+        <Col span={4}>
+          <Form.Item name="toDateChange" label="结束日期">
+            <DatePicker placeholder="24点" onChange={this.toDateChange} />
+          </Form.Item>
+        </Col>
+        <Col span={2}>
+          <Form.Item>
+            <Button type="primary" htmlType="submit">
+              Search
+            </Button>
+          </Form.Item>
+        </Col>
+        <Col span={2} offset={2}>
+          <Form.Item>
+            <Button onClick={this.props.download} type="primary">
+              数据下载
+            </Button>
+          </Form.Item>
+        </Col>
       </Form>
     );
   }
 }
 MetricSearchCard.propTypes = {
   searchSubmit: PropTypes.func,
+  download: PropTypes.func,
 };
 
 export default MetricSearchCard;

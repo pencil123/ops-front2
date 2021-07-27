@@ -42,7 +42,7 @@ import axios from "axios";
 // }
 
 export default class Server {
-  axios(method, url, data) {
+  axios(method, url, data, extraConfig) {
     return new Promise((resolve, reject) => {
       let _option = {
         method,
@@ -50,6 +50,7 @@ export default class Server {
         timeout: 300000,
         params: null,
         data: data,
+        ...extraConfig,
         withCredentials: true, //是否携带cookie发起请求
         validateStatus: (status) => {
           return status >= 200 && status < 300;

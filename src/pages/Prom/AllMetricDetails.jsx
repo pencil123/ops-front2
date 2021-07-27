@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Row, Col, PageHeader } from "antd";
+import { Row, Col, PageHeader, Modal } from "antd";
 import MetricAPI from "@/api/metric_api";
 import MetricSearchCard from "./components/metricSearchCard";
 import MetricListTable from "./components/metricListTable";
@@ -51,6 +51,38 @@ export class AllMetricDetails extends Component {
     );
   };
 
+  download = async () => {
+    let filename = "效能数据明细";
+    let data = {
+      hostIp: this.state.searchIp,
+      applicationId: this.state.applicationId,
+      beginTime: this.state.targetFromDate,
+      endTime: this.state.targetToDate,
+    };
+    if (!this.state.searchIp && !this.state.applicationId) {
+      Modal.error({
+        title: "Wanging",
+        content: "明细数据导出，搜素IP/S码选项不能为空！",
+      });
+      return;
+    }
+    let res = await MetricAPI.indicatorExport(data);
+    try {
+      let blob = new Blob([res]);
+      console.log("blob:", res);
+      let downloadElement = document.createElement("a");
+      let href = window.URL.createObjectURL(blob); //创建下载的链接
+      downloadElement.href = href;
+      downloadElement.download = filename + ".xlsx"; //下载后文件名
+      document.body.appendChild(downloadElement);
+      downloadElement.click(); //点击下载
+      document.body.removeChild(downloadElement); //下载完成移除元素
+      window.URL.revokeObjectURL(href); //释放blob对象
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   render() {
     return (
       <>
@@ -60,9 +92,10 @@ export class AllMetricDetails extends Component {
             subTitle="搜索条件中服务器IP和S码同时只能选择一个"
             style={{ width: "100%" }}
           >
-            <Col>
-              <MetricSearchCard searchSubmit={this.searchSubmit} />
-            </Col>
+            <MetricSearchCard
+              searchSubmit={this.searchSubmit}
+              download={this.download}
+            />
           </PageHeader>
         </Row>
         <Row id="MetricTable">
