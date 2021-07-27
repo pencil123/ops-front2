@@ -65,6 +65,29 @@ class MetricAPI extends Server {
       throw err;
     }
   }
+
+  async collectExport(data) {
+    try {
+      let result = await this.axios(
+        "get",
+        "/api/v1/prom/indicator/find/collect/export" + getUrlConcat(data),
+        "",
+        { responseType: "blob" }
+      );
+      if (result) {
+        return result;
+      } else {
+        let err = {
+          tip: "能效指标聚合数据获取失败",
+          response: result,
+        };
+        throw err;
+      }
+    } catch (err) {
+      console.log(err);
+      throw err;
+    }
+  }
 }
 
 export default new MetricAPI();

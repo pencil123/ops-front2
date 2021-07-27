@@ -50,6 +50,30 @@ export class AnalysedMetricData extends Component {
       }
     );
   };
+  download = async () => {
+    let filename = "效能聚合数据";
+    let data = {
+      hostIp: this.state.searchIp,
+      applicationId: this.state.applicationId,
+      beginTime: this.state.targetFromDate,
+      endTime: this.state.targetToDate,
+    };
+    let res = await MetricAPI.collectExport(data);
+    try {
+      let blob = new Blob([res]);
+      console.log("blob:", res);
+      let downloadElement = document.createElement("a");
+      let href = window.URL.createObjectURL(blob); //创建下载的链接
+      downloadElement.href = href;
+      downloadElement.download = filename + ".xlsx"; //下载后文件名
+      document.body.appendChild(downloadElement);
+      downloadElement.click(); //点击下载
+      document.body.removeChild(downloadElement); //下载完成移除元素
+      window.URL.revokeObjectURL(href); //释放blob对象
+    } catch (err) {
+      console.log(err);
+    }
+  };
   render() {
     return (
       <>
@@ -60,7 +84,10 @@ export class AnalysedMetricData extends Component {
             style={{ width: "100%" }}
           >
             <Col>
-              <MetricSearchCard searchSubmit={this.searchSubmit} />
+              <MetricSearchCard
+                searchSubmit={this.searchSubmit}
+                download={this.download}
+              />
             </Col>
           </PageHeader>
         </Row>
