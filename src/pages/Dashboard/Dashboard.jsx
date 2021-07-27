@@ -47,6 +47,7 @@ export class Dashboard extends Component {
   };
   sCodeSelect = async (sCode) => {
     this.topologyRequest(sCode);
+    this.setState({ sCodeSelectDefaultKey: sCode });
     let res = await DashBoardAPI.sCodeDashBoard({ applicationId: sCode });
     if (res.data.ipList != null) {
       this.setState({ sCodeRecord: res.data, ipList: res.data.ipList });
