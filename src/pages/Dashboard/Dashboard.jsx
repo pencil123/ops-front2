@@ -1,6 +1,14 @@
 import React, { Component } from "react";
 import DashBoardAPI from "@/api/dashboard";
-import { Descriptions, PageHeader, Select, Divider, Row, Col } from "antd";
+import {
+  Descriptions,
+  PageHeader,
+  Select,
+  Divider,
+  Row,
+  Col,
+  Empty,
+} from "antd";
 import SkywalkingAPI from "@/api/skywalking";
 import Topology from "./components/Topology";
 import "./dashboard.less";
@@ -50,7 +58,7 @@ export class Dashboard extends Component {
     this.setState({ sCodeSelectDefaultKey: sCode });
     let res = await DashBoardAPI.sCodeDashBoard({ applicationId: sCode });
     if (res.data.ipList != null) {
-      this.setState({ sCodeRecord: res.data, ipList: res.data.ipList });
+      this.setState({});
       let varIpString = res.data.ipList.join("&var-ip=");
       let cpuUrlString =
         "https://grafana-ops.haier.net/d/oslinux001/linux?viewPanel=6&orgId=1&kiosk&var-ip=" +
@@ -71,7 +79,19 @@ export class Dashboard extends Component {
         warnUrlString,
         iptarget: res.data.ipList[0],
       });
+    } else {
+      this.setState({
+        cpuUrlString: "",
+        memUrlString: "",
+        diskUrlString: "",
+        warnUrlString: "",
+        iptarget: "",
+      });
     }
+    this.setState({
+      ipList: res.data.ipList,
+      sCodeRecord: res.data,
+    });
   };
   topologyRequest = async (sCode) => {
     let res = await SkywalkingAPI.listApp({
@@ -225,43 +245,59 @@ export class Dashboard extends Component {
           />
         </PageHeader>
         <Row>
-          <Col span={8}>
-            <iframe
-              title="CPU"
-              width="100%"
-              height="370"
-              sandbox="allow-scripts allow-forms allow-same-origin"
-              src={this.state.cpuUrlString}
-            ></iframe>
+          <Col span={8} style={{ height: 370 }}>
+            {this.state.cpuUrlString ? (
+              <iframe
+                title="CPU"
+                width="100%"
+                height="370"
+                sandbox="allow-scripts allow-forms allow-same-origin"
+                src={this.state.cpuUrlString}
+              ></iframe>
+            ) : (
+              <Empty description={<span>此项目不存在服务器节点数据</span>} />
+            )}
           </Col>
-          <Col span={8}>
-            <iframe
-              title="mem"
-              width="100%"
-              height="370"
-              sandbox="allow-scripts allow-forms allow-same-origin"
-              src={this.state.memUrlString}
-            ></iframe>
+          <Col span={8} style={{ height: 370 }}>
+            {this.state.memUrlString ? (
+              <iframe
+                title="mem"
+                width="100%"
+                height="370"
+                sandbox="allow-scripts allow-forms allow-same-origin"
+                src={this.state.memUrlString}
+              ></iframe>
+            ) : (
+              <Empty description={<span>此项目不存在服务器节点数据</span>} />
+            )}
           </Col>
-          <Col span={8}>
-            <iframe
-              title="disk"
-              width="100%"
-              height="370"
-              sandbox="allow-scripts allow-forms allow-same-origin"
-              src={this.state.diskUrlString}
-            ></iframe>
+          <Col span={8} style={{ height: 370 }}>
+            {this.state.diskUrlString ? (
+              <iframe
+                title="disk"
+                width="100%"
+                height="370"
+                sandbox="allow-scripts allow-forms allow-same-origin"
+                src={this.state.diskUrlString}
+              ></iframe>
+            ) : (
+              <Empty description={<span>此项目不存在服务器节点数据</span>} />
+            )}
           </Col>
         </Row>
         <Row>
-          <Col span={24}>
-            <iframe
-              title="warn"
-              width="100%"
-              height="370"
-              sandbox="allow-scripts allow-forms allow-same-origin"
-              src={this.state.warnUrlString}
-            ></iframe>
+          <Col span={24} style={{ height: 370 }}>
+            {this.state.warnUrlString ? (
+              <iframe
+                title="warn"
+                width="100%"
+                height="370"
+                sandbox="allow-scripts allow-forms allow-same-origin"
+                src={this.state.warnUrlString}
+              ></iframe>
+            ) : (
+              <Empty description={<span>此项目不存在服务器节点数据</span>} />
+            )}
           </Col>
         </Row>
       </>

@@ -45,9 +45,13 @@ export class MyHeader extends Component {
     }
     let userName = localStorage.getItem("userName");
     if (userName === "undefined" || userName === null) {
-      let result = await AuthAPI.userName();
-      userName = result.data.userName;
-      localStorage.setItem("userName", userName);
+      try {
+        let result = await AuthAPI.userName();
+        userName = result.data.userName;
+        localStorage.setItem("userName", userName);
+      } catch (error) {
+        localStorage.removeItem("access_token");
+      }
       this.initUserName();
     }
     this.setState({ userName: userName });
