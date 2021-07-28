@@ -43,11 +43,11 @@ export class MyHeader extends Component {
     if (!localStorage.getItem("access_token")) {
       return;
     }
-    let userName = sessionStorage.getItem("userName");
+    let userName = localStorage.getItem("userName");
     if (userName === "undefined" || userName === null) {
       let result = await AuthAPI.userName();
       userName = result.data.userName;
-      sessionStorage.setItem("userName", userName);
+      localStorage.setItem("userName", userName);
       this.initUserName();
     }
     this.setState({ userName: userName });
