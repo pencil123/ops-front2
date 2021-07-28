@@ -5,6 +5,7 @@ import ServerManager from "@/pages/User/ServerManager";
 import ManagerList from "@/pages/User/ManagerList";
 import ICPDomain from "./ICP/ICPDomain";
 import Dashboard from "./Dashboard/Dashboard";
+import DialingIndex from "./Dialing/DialingIndex";
 
 const menu = [
   {
@@ -26,6 +27,23 @@ const menu = [
         name: "效能自定义检索",
         icon: "icon-submenu",
         key: "AnalysedMetricData",
+      },
+    ],
+  },
+  {
+    name: "拨测应用",
+    icon: "icon-fuwuboce",
+    key: "dialing",
+    children: [
+      {
+        name: "中台API拨测",
+        icon: "icon-submenu",
+        key: "CenterAPIDialing",
+      },
+      {
+        name: "应用首页URL拨测",
+        icon: "icon-submenu",
+        key: "AppIndexDialing",
       },
     ],
   },
@@ -79,6 +97,18 @@ const tabs = {
   ValidICPDomain: <ICPDomain checkType="success" />,
   InvalidICPDomain: <ICPDomain checkType="fail" />,
   ICPDomain: <ICPDomain checkType="all" />,
+  CenterAPIDialing: (
+    <DialingIndex
+      title="中台API拨测"
+      targetUrl="https://grafana-ops.haier.net/d/bxywGBqGz/api_monitor?orgId=1"
+    />
+  ),
+  AppIndexDialing: (
+    <DialingIndex
+      title="应用首页URL拨测"
+      targetUrl="https://grafana-ops.haier.net/d/RjX9_dznz/app_monitor?orgId=1&refresh=5s"
+    />
+  ),
 };
 
 export { menu, tabs };
