@@ -27,14 +27,14 @@ class Index extends Component {
         window.open(
           // eslint-disable-next-line no-undef
           process.env.REACT_APP_ACCOUINT_CENTER_DOMAIN +
-            "#/login?responseType=code&client_id=" +
+            "?responseType=code&client_id=" +
             client_id +
             "&redirect_uri=" +
             redirect_uri +
             "&returnUrl=" +
             // eslint-disable-next-line no-undef
             process.env.REACT_APP_BASEURL +
-            "/login",
+            "/login#/login",
           "_self"
         );
       },
