@@ -23,7 +23,7 @@ export class AnalysedMetricData extends Component {
     this.setState({ loading: true });
     let data = {
       currentPage: this.state.pageNum,
-      hostIp: this.state.searchIp,
+      hostIpArray: this.state.searchIp,
       endTime: this.state.targetToDate,
       beginTime: this.state.targetFromDate,
       applicationId: this.state.applicationId,
@@ -53,7 +53,7 @@ export class AnalysedMetricData extends Component {
   download = async () => {
     let filename = "效能聚合数据";
     let data = {
-      hostIp: this.state.searchIp,
+      hostIpArray: this.state.searchIp,
       applicationId: this.state.applicationId,
       beginTime: this.state.targetFromDate,
       endTime: this.state.targetToDate,
