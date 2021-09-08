@@ -6,7 +6,7 @@ import { createFromIconfontCN } from "@ant-design/icons";
 import { Menu, Layout } from "antd";
 const { Sider } = Layout;
 const IconFont = createFromIconfontCN({
-  scriptUrl: "//at.alicdn.com/t/font_2690980_zo3pib62tic.js",
+  scriptUrl: "//at.alicdn.com/t/font_2690980_naje3qeivf8.js",
 });
 export class MySider extends Component {
   state = {

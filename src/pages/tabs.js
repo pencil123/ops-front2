@@ -6,6 +6,7 @@ import ManagerList from "@/pages/User/ManagerList";
 import ICPDomain from "./ICP/ICPDomain";
 import Dashboard from "./Dashboard/Dashboard";
 import DialingIndex from "./Dialing/DialingIndex";
+import AlarmIndex from "./Alarm/AlarmIndex";
 
 const menu = [
   {
@@ -27,6 +28,18 @@ const menu = [
         name: "效能自定义检索",
         icon: "icon-submenu",
         key: "AnalysedMetricData",
+      },
+    ],
+  },
+  {
+    name: "告警管理",
+    icon: "icon-gaojingshezhi",
+    key: "alarm",
+    children: [
+      {
+        name: "告警信息查询",
+        icon: "icon-submenu",
+        key: "AlarmIndex",
       },
     ],
   },
@@ -107,6 +120,12 @@ const tabs = {
     <DialingIndex
       title="应用首页URL拨测"
       targetUrl="https://grafana-ops.haier.net/d/RjX9_dznz/app_monitor?orgId=1&refresh=5s"
+    />
+  ),
+  AlarmIndex: (
+    <AlarmIndex
+      title="告警信息查询"
+      targetUrl="https://grafana-ops.haier.net/d/NYp999aGz/gao-jing-xin-xi-cha-xun?orgId=1"
     />
   ),
 };
