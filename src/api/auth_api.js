@@ -21,7 +21,7 @@ class AuthAPI extends Server {
 
   async userName() {
     try {
-      let result = await this.axios("get", "/api/v1/prom/user/info");
+      let result = await this.axios("get", "/api/v1/gw/user/info");
       if (result) {
         return result;
       } else {
