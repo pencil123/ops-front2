@@ -18,7 +18,7 @@ class Index extends Component {
   }
 
   initToken = () => {
-    let fullUrl = `/api/v1/prom/applicationClient?appCode=S01129`;
+    let fullUrl = `/applicationClient?appCode=S01129`;
     console.log("跳转获取用户的 access_token");
     axios.get(fullUrl).then(
       (response) => {
