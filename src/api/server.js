@@ -76,6 +76,7 @@ export default class Server {
       axios.interceptors.response.use(
         (response) => {
           if (response.data.code === 401) {
+            console.log("响应数据得状态码：", response.data.code);
             window.open("/login", "_self");
             return response;
           } else {
@@ -83,7 +84,11 @@ export default class Server {
           }
         },
         (error) => {
-          console.log("axios.interceptors.response:", error);
+          console.log("axios.interceptors.response:", error.response.status);
+          if (error.response.status === 401) {
+            console.log("响应数据得状态码：", error.response.code);
+            window.open("/login", "_self");
+          }
           Promise.reject(error);
         }
       );
