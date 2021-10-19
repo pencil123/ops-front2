@@ -3,7 +3,7 @@ import Server from "./server";
 class AuthAPI extends Server {
   async userRole() {
     try {
-      let result = await this.axios("get", "/api/v1/prom/account/admin");
+      let result = await this.axios("get", "/api/v1/user/account/admin");
       if (result) {
         return result;
       } else {
