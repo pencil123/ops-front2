@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import DashBoardAPI from "@/api/dashboard";
+import QuerylogAPI from "@/api/querylog_api";
 import {
   Descriptions,
   PageHeader,
@@ -11,6 +12,7 @@ import {
 } from "antd";
 import SkywalkingAPI from "@/api/skywalking";
 import Topology from "./components/Topology";
+import DomainStat from "./components/DomainStat";
 import "./dashboard.less";
 export class Dashboard extends Component {
   state = {
@@ -22,6 +24,8 @@ export class Dashboard extends Component {
     memUrlString: "",
     diskUrlString: "",
     warnUrlString: "",
+    domainStat: {},
+    domainQueryList: [],
     iptarget: "",
     topoTitle: "",
     topoNodes: [],
@@ -51,6 +55,14 @@ export class Dashboard extends Component {
       }
     } catch (error) {
       console.error("dashborad page:", error);
+    }
+    try {
+      let res = await QuerylogAPI.getDashboard();
+      this.setState({
+        domainStat: res.data,
+      });
+    } catch (error) {
+      console.error("querlog dashborad page:", error);
     }
   };
   sCodeSelect = async (sCode) => {
@@ -88,6 +100,16 @@ export class Dashboard extends Component {
         iptarget: "",
       });
     }
+    let resquerylog = await QuerylogAPI.getStatByScode({ appCode: sCode });
+    if (resquerylog.data != null) {
+      this.setState({
+        domainQueryList: resquerylog.data,
+      });
+    } else {
+      this.setState({
+        domainQueryList: [],
+      });
+    }
     this.setState({
       ipList: res.data.ipList,
       sCodeRecord: res.data,
@@ -123,6 +145,7 @@ export class Dashboard extends Component {
     const { Option } = Select;
     const userRecord = this.state.userRecord;
     const sCodeRecord = this.state.sCodeRecord;
+    const domainStat = this.state.domainStat;
     return (
       <>
         <PageHeader
@@ -135,24 +158,45 @@ export class Dashboard extends Component {
           }
           title="项目和服务器信息概览"
         >
-          <Descriptions bordered column={6}>
-            <Descriptions.Item label="CPU负载高：">
+          <Descriptions bordered column={3}>
+            <Descriptions.Item label="CPU负载高" labelStyle={{ color: "Red" }}>
               {userRecord.cpuHighUsage}
             </Descriptions.Item>
-            <Descriptions.Item label="CPU负载正常：">
+            <Descriptions.Item
+              label="CPU负载正常"
+              labelStyle={{ color: "Blue" }}
+            >
               {userRecord.cpuNormalUsage}
             </Descriptions.Item>
-            <Descriptions.Item label="CPU负载低：">
+            <Descriptions.Item label="CPU负载低">
               {userRecord.cpuLowUsage}
             </Descriptions.Item>
-            <Descriptions.Item label="内存负载高：">
+            <Descriptions.Item label="内存负载高" labelStyle={{ color: "Red" }}>
               {userRecord.memoryHighUsage}
             </Descriptions.Item>
-            <Descriptions.Item label="内存负载正常：">
+            <Descriptions.Item
+              label="内存负载正常"
+              labelStyle={{ color: "Blue" }}
+            >
               {userRecord.memoryNormalUsage}
             </Descriptions.Item>
-            <Descriptions.Item label="内存负载低：">
+            <Descriptions.Item label="内存负载低">
               {userRecord.memoryLowUsage}
+            </Descriptions.Item>
+            <Descriptions.Item label="统计域名数">
+              {domainStat.toltalCount}
+            </Descriptions.Item>
+            <Descriptions.Item
+              label="域名访问分析"
+              labelStyle={{ color: "Blue" }}
+            >
+              {domainStat.statCount}
+            </Descriptions.Item>
+            <Descriptions.Item
+              label="未收集域名访问"
+              labelStyle={{ color: "Red" }}
+            >
+              {domainStat.unStatCount}
             </Descriptions.Item>
           </Descriptions>
         </PageHeader>
@@ -218,26 +262,27 @@ export class Dashboard extends Component {
             </div>
           }
         >
-          <Descriptions size="small" column={6}>
-            <Descriptions.Item label="CPU负载高：">
+          <Descriptions size="small" column={3}>
+            <Descriptions.Item label="CPU负载高">
               {sCodeRecord.cpuHighUsage}
             </Descriptions.Item>
-            <Descriptions.Item label="CPU负载正常：">
+            <Descriptions.Item label="CPU负载正常">
               {sCodeRecord.cpuNormalUsage}
             </Descriptions.Item>
-            <Descriptions.Item label="CPU负载低：">
+            <Descriptions.Item label="CPU负载低">
               {sCodeRecord.cpuLowUsage}
             </Descriptions.Item>
-            <Descriptions.Item label="内存负载高：">
+            <Descriptions.Item label="内存负载高">
               {sCodeRecord.memoryHighUsage}
             </Descriptions.Item>
-            <Descriptions.Item label="内存负载正常：">
+            <Descriptions.Item label="内存负载正常">
               {sCodeRecord.memoryNormalUsage}
             </Descriptions.Item>
-            <Descriptions.Item label="内存负载低：">
+            <Descriptions.Item label="内存负载低">
               {sCodeRecord.memoryLowUsage}
             </Descriptions.Item>
           </Descriptions>
+          <DomainStat domainStats={this.state.domainQueryList} />
           <Topology
             nodes={this.state.topoNodes}
             calls={this.state.topoCalls}

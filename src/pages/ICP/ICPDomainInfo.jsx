@@ -5,7 +5,6 @@ import ICPCheckLog from "./components/ICPCheckLog";
 import WebCheckLog from "./components/WebCheckLog";
 import ManagerLog from "./components/ManagerLog";
 import DomainAPI from "@/api/domain_api";
-import LogAPI from "@/api/log_api";
 import IcpAPI from "@/api/icp_api";
 import "./icp.less";
 import { Tabs, Modal, Form, Input } from "antd";
@@ -48,7 +47,7 @@ export class ICPDomainInfo extends Component {
         subDomainTotalCount: subDomain.data.totalCount,
       });
     } else if (key === "ICPlog") {
-      let icpLogs = await LogAPI.list({
+      let icpLogs = await IcpAPI.listlog({
         domain: this.state.ICPDomain.domain,
         targetType: 1,
         currentPage: this.state.icpLogPageNum,
@@ -58,7 +57,7 @@ export class ICPDomainInfo extends Component {
         icpLogTotalCount: icpLogs.data.totalCount,
       });
     } else if (key === "webCheck") {
-      let icpLogs = await LogAPI.list({
+      let icpLogs = await IcpAPI.listlog({
         domain: this.state.ICPDomain.domain,
         targetType: 2,
         currentPage: this.state.webLogPageNum,
@@ -68,7 +67,7 @@ export class ICPDomainInfo extends Component {
         webLogTotalCount: icpLogs.data.totalCount,
       });
     } else if (key === "managerLog") {
-      let adminLogs = await LogAPI.list({
+      let adminLogs = await IcpAPI.listlog({
         domain: this.state.ICPDomain.domain,
         targetType: 3,
         currentPage: this.state.adminLogPageNum,
