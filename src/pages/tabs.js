@@ -7,6 +7,7 @@ import ICPDomain from "./ICP/ICPDomain";
 import Dashboard from "./Dashboard/Dashboard";
 import DialingIndex from "./Dialing/DialingIndex";
 import AlarmIndex from "./Alarm/AlarmIndex";
+import Statlist from "./Querylog/Statlist";
 
 const menu = [
   {
@@ -83,6 +84,18 @@ const menu = [
     ],
   },
   {
+    name: "域名访问统计",
+    icon: "icon-Metrics",
+    key: "querylog",
+    children: [
+      {
+        name: "访问统计列表",
+        icon: "icon-submenu",
+        key: "Statlist",
+      },
+    ],
+  },
+  {
     name: "管理员",
     icon: "icon-admin",
     key: "User",
@@ -110,6 +123,7 @@ const tabs = {
   ValidICPDomain: <ICPDomain checkType="success" />,
   InvalidICPDomain: <ICPDomain checkType="fail" />,
   ICPDomain: <ICPDomain checkType="all" />,
+  Statlist: <Statlist />,
   CenterAPIDialing: (
     <DialingIndex
       title="中台API拨测"
