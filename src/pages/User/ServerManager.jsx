@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import NodeAPI from "@/api/node_api";
 import { Table, Button, PageHeader } from "antd";
-import { Form, Modal, Input } from "antd";
+import { Form, Input } from "antd";
 import { PanesContext } from "@/context/Panes";
 
 export class ServerManager extends Component {
@@ -9,7 +9,7 @@ export class ServerManager extends Component {
   state = {
     loading: false,
     hostIp: "",
-    applicationId: "",
+    appCode: "",
     currentPage: 1,
     deleteServer: "",
     visibleDel: false,
@@ -23,7 +23,7 @@ export class ServerManager extends Component {
     let data = {
       currentPage: this.state.pageNum,
       hostIp: this.state.hostIp,
-      applicationId: this.state.applicationId,
+      appCode: this.state.appCode,
     };
     let result = await NodeAPI.nodeList(data);
     this.setState({
@@ -52,14 +52,14 @@ export class ServerManager extends Component {
     } else {
       this.setState({ switch: "scodeSearch" });
     }
-    this.setState({ applicationId: event.target.value });
+    this.setState({ appCode: event.target.value });
   };
 
   formSubmit = (fieldsValue) => {
     this.setState(
       {
         hostIp: fieldsValue.hostIp,
-        applicationId: fieldsValue.applicationId,
+        appCode: fieldsValue.appCode,
         pageNum: 1,
       },
       () => {
@@ -67,41 +67,11 @@ export class ServerManager extends Component {
       }
     );
   };
-  serverDelete = (hostIp) => {
-    this.setState({ visibleDel: true, deleteServer: hostIp });
-  };
-  handleSubmit = async () => {
-    await NodeAPI.nodeDelete({ hostIp: this.state.deleteServer });
-    this.setState({ visibleDel: false });
-    this.initData();
-  };
-  handleCancel = () => {
-    this.setState({ visibleDel: false });
-  };
-  serverUpdate = (record) => {
-    this.setState({ visibleUpdate: true }, () => {
-      this.ServerUpdateRef.current.setFieldsValue({
-        hostIp: record.hostIp,
-        app: record.app,
-        remarks: record.remarks,
-      });
-    });
-  };
-  handleSubmit2 = async () => {
-    console.log(this.ServerUpdateRef.current.getFieldsValue());
-    await NodeAPI.update(this.ServerUpdateRef.current.getFieldsValue());
-    this.setState({ visibleUpdate: false }, () => {
-      this.initData();
-    });
-  };
-  handleCancel2 = () => {
-    this.setState({ visibleUpdate: false });
-  };
   render() {
     const columns = [
       {
         title: "S码",
-        dataIndex: "applicationId",
+        dataIndex: "appCode",
       },
       {
         title: "IP地址",
@@ -109,59 +79,15 @@ export class ServerManager extends Component {
       },
       {
         title: "说明",
-        dataIndex: "app",
-      },
-      {
-        title: "补充说明",
-        remarks: "cpuCore",
+        dataIndex: "appName",
       },
       {
         title: "更新时间",
         dataIndex: "createTime",
       },
-      {
-        title: "操作",
-        dataIndex: "hostIp",
-        render: (text, row) => (
-          <>
-            <Button onClick={() => this.serverUpdate(row)}>更新</Button>
-            <Button onClick={() => this.serverDelete(text)}>删除</Button>
-          </>
-        ),
-      },
     ];
     return (
       <>
-        <Modal
-          title="删除节点"
-          visible={this.state.visibleDel}
-          onOk={this.handleSubmit}
-          onCancel={this.handleCancel}
-        >
-          是否要删除 <b>{this.state.deleteServer}</b>节点？
-        </Modal>
-        <Modal
-          title="节点信息更新"
-          visible={this.state.visibleUpdate}
-          onOk={this.handleSubmit2}
-          onCancel={this.handleCancel2}
-        >
-          <Form
-            ref={this.ServerUpdateRef}
-            labelCol={{ span: 4 }}
-            wrapperCol={{ span: 20 }}
-          >
-            <Form.Item label="IP地址" name="hostIp">
-              <Input disabled={true} />
-            </Form.Item>
-            <Form.Item label="节点说明" name="app">
-              <Input disabled={true} />
-            </Form.Item>
-            <Form.Item label="补充" name="remarks">
-              <Input />
-            </Form.Item>
-          </Form>
-        </Modal>
         <PageHeader
           title="服务器搜索"
           subTitle="搜索条件中服务器IP和S码同时只能选择一个"
@@ -180,7 +106,7 @@ export class ServerManager extends Component {
                   disabled={this.state.switch === "scodeSearch"}
                 />
               </Form.Item>
-              <Form.Item name="applicationId">
+              <Form.Item name="appCode">
                 <Input
                   placeholder="S码搜索"
                   onChange={this.sCodeSearchChange}
