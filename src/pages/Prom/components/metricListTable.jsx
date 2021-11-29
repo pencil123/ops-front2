@@ -93,11 +93,11 @@ export class MetricListTable extends Component {
       },
       {
         title: "应用名称",
-        dataIndex: "app",
+        dataIndex: "appName",
       },
       {
         title: "S码",
-        dataIndex: "applicationId",
+        dataIndex: "appCode",
       },
     ];
     const MetricCreateTime = [

@@ -1,19 +1,12 @@
 import React, { Component } from "react";
 import DashBoardAPI from "@/api/dashboard";
 import QuerylogAPI from "@/api/querylog_api";
-import {
-  Descriptions,
-  PageHeader,
-  Select,
-  Divider,
-  Row,
-  Col,
-  Empty,
-} from "antd";
+import { Descriptions, PageHeader, Select, Divider } from "antd";
 import SkywalkingAPI from "@/api/skywalking";
 import Topology from "./components/Topology";
 import DomainStat from "./components/DomainStat";
 import "./dashboard.less";
+import NodeStat from "./components/NodeStat";
 export class Dashboard extends Component {
   state = {
     userRecord: {},
@@ -46,10 +39,10 @@ export class Dashboard extends Component {
           {
             userRecord: res.data,
             sCodeList: res.data.applicationVOList,
-            sCodeSelectDefaultKey: res.data.applicationVOList[0].applicationId,
+            sCodeSelectDefaultKey: res.data.applicationVOList[0].appCode,
           },
           () => {
-            this.sCodeSelect(res.data.applicationVOList[0].applicationId);
+            this.sCodeSelect(res.data.applicationVOList[0].appCode);
           }
         );
       }
@@ -68,7 +61,7 @@ export class Dashboard extends Component {
   sCodeSelect = async (sCode) => {
     this.topologyRequest(sCode);
     this.setState({ sCodeSelectDefaultKey: sCode });
-    let res = await DashBoardAPI.sCodeDashBoard({ applicationId: sCode });
+    let res = await DashBoardAPI.sCodeDashBoard({ appCode: sCode });
     if (res.data.ipList != null) {
       this.setState({});
       let varIpString = res.data.ipList.join("&var-ip=");
@@ -117,7 +110,7 @@ export class Dashboard extends Component {
   };
   topologyRequest = async (sCode) => {
     let res = await SkywalkingAPI.listApp({
-      applicationId: sCode,
+      appCode: sCode,
       pageSize: 100,
     });
     if (res.data.records.length === 0) {
@@ -141,10 +134,11 @@ export class Dashboard extends Component {
     });
   };
 
+  //nodeStat 节点所有函数 start
+
   render() {
     const { Option } = Select;
     const userRecord = this.state.userRecord;
-    const sCodeRecord = this.state.sCodeRecord;
     const domainStat = this.state.domainStat;
     return (
       <>
@@ -224,127 +218,64 @@ export class Dashboard extends Component {
               >
                 {this.state.sCodeList.map((sCode) => {
                   return (
-                    <Option
-                      key={sCode.applicationId}
-                      value={sCode.applicationId}
-                    >
-                      {sCode.applicationId}/{sCode.applicationName}
+                    <Option key={sCode.appCode} value={sCode.appCode}>
+                      {sCode.appCode}/{sCode.appName}
                     </Option>
                   );
                 })}
               </Select>
-              <Select
-                key="ipSelect"
-                showSearch
-                value={this.state.iptarget}
-                style={{ width: 200 }}
-                placeholder="Select a person"
-                optionFilterProp="children"
-                onChange={this.ipSelect}
-                filterOption={(input, option) =>
-                  (Array.isArray(option.props.children)
-                    ? option.props.children.join("")
-                    : option.props.children
-                  )
-                    .toLowerCase()
-                    .indexOf(input.toLowerCase()) >= 0
-                }
-              >
-                {this.state.ipList &&
-                  this.state.ipList.map((ipString) => {
-                    return (
-                      <Option key={ipString} value={ipString}>
-                        {ipString}
-                      </Option>
-                    );
-                  })}
-              </Select>
             </div>
           }
+        ></PageHeader>
+        <PageHeader
+          title="服务器节点信息"
+          className="nodeCard"
+          extra={
+            <Select
+              key="ipSelect"
+              showSearch
+              value={this.state.iptarget}
+              style={{ width: 200 }}
+              placeholder="Select a person"
+              optionFilterProp="children"
+              onChange={this.ipSelect}
+              filterOption={(input, option) =>
+                (Array.isArray(option.props.children)
+                  ? option.props.children.join("")
+                  : option.props.children
+                )
+                  .toLowerCase()
+                  .indexOf(input.toLowerCase()) >= 0
+              }
+            >
+              {this.state.ipList &&
+                this.state.ipList.map((ipString) => {
+                  return (
+                    <Option key={ipString} value={ipString}>
+                      {ipString}
+                    </Option>
+                  );
+                })}
+            </Select>
+          }
         >
-          <Descriptions size="small" column={3}>
-            <Descriptions.Item label="CPU负载高">
-              {sCodeRecord.cpuHighUsage}
-            </Descriptions.Item>
-            <Descriptions.Item label="CPU负载正常">
-              {sCodeRecord.cpuNormalUsage}
-            </Descriptions.Item>
-            <Descriptions.Item label="CPU负载低">
-              {sCodeRecord.cpuLowUsage}
-            </Descriptions.Item>
-            <Descriptions.Item label="内存负载高">
-              {sCodeRecord.memoryHighUsage}
-            </Descriptions.Item>
-            <Descriptions.Item label="内存负载正常">
-              {sCodeRecord.memoryNormalUsage}
-            </Descriptions.Item>
-            <Descriptions.Item label="内存负载低">
-              {sCodeRecord.memoryLowUsage}
-            </Descriptions.Item>
-          </Descriptions>
+          <NodeStat
+            sCodeRecord={this.state.sCodeRecord}
+            cpuUrlString={this.state.cpuUrlString}
+            memUrlString={this.state.memUrlString}
+            diskUrlString={this.state.diskUrlString}
+          />
+        </PageHeader>
+        <PageHeader title="域名信息" className="domainCard">
           <DomainStat domainStats={this.state.domainQueryList} />
+        </PageHeader>
+        <PageHeader title="APM信息" className="domainCard">
           <Topology
             nodes={this.state.topoNodes}
             calls={this.state.topoCalls}
             title={this.state.topoTitle}
           />
         </PageHeader>
-        <Row>
-          <Col span={8} style={{ height: 370 }}>
-            {this.state.cpuUrlString ? (
-              <iframe
-                title="CPU"
-                width="100%"
-                height="370"
-                sandbox="allow-scripts allow-forms allow-same-origin"
-                src={this.state.cpuUrlString}
-              ></iframe>
-            ) : (
-              <Empty description={<span>此项目不存在服务器节点数据</span>} />
-            )}
-          </Col>
-          <Col span={8} style={{ height: 370 }}>
-            {this.state.memUrlString ? (
-              <iframe
-                title="mem"
-                width="100%"
-                height="370"
-                sandbox="allow-scripts allow-forms allow-same-origin"
-                src={this.state.memUrlString}
-              ></iframe>
-            ) : (
-              <Empty description={<span>此项目不存在服务器节点数据</span>} />
-            )}
-          </Col>
-          <Col span={8} style={{ height: 370 }}>
-            {this.state.diskUrlString ? (
-              <iframe
-                title="disk"
-                width="100%"
-                height="370"
-                sandbox="allow-scripts allow-forms allow-same-origin"
-                src={this.state.diskUrlString}
-              ></iframe>
-            ) : (
-              <Empty description={<span>此项目不存在服务器节点数据</span>} />
-            )}
-          </Col>
-        </Row>
-        <Row>
-          <Col span={24} style={{ height: 370 }}>
-            {this.state.warnUrlString ? (
-              <iframe
-                title="warn"
-                width="100%"
-                height="370"
-                sandbox="allow-scripts allow-forms allow-same-origin"
-                src={this.state.warnUrlString}
-              ></iframe>
-            ) : (
-              <Empty description={<span>此项目不存在服务器节点数据</span>} />
-            )}
-          </Col>
-        </Row>
       </>
     );
   }

@@ -26,7 +26,7 @@ export class AnalysedMetricData extends Component {
       hostIpArray: this.state.searchIp,
       endTime: this.state.targetToDate,
       beginTime: this.state.targetFromDate,
-      applicationId: this.state.applicationId,
+      appCode: this.state.appCode,
     };
     let result = await MetricAPI.metricCollectList(data);
     this.setState({
@@ -42,9 +42,9 @@ export class AnalysedMetricData extends Component {
     });
   };
 
-  searchSubmit = (searchIp, applicationId, targetFromDate, targetToDate) => {
+  searchSubmit = (searchIp, appCode, targetFromDate, targetToDate) => {
     this.setState(
-      { searchIp, applicationId, targetFromDate, targetToDate, pageNum: 1 },
+      { searchIp, appCode, targetFromDate, targetToDate, pageNum: 1 },
       () => {
         this.initData();
       }
@@ -54,7 +54,7 @@ export class AnalysedMetricData extends Component {
     let filename = "效能聚合数据";
     let data = {
       hostIpArray: this.state.searchIp,
-      applicationId: this.state.applicationId,
+      appCode: this.state.appCode,
       beginTime: this.state.targetFromDate,
       endTime: this.state.targetToDate,
     };

@@ -7,7 +7,7 @@ export class MetricSearchCard extends Component {
     super(props);
     this.state = {
       searchIp: "",
-      applicationId: "",
+      appCode: "",
       switch: "",
     };
   }
@@ -27,7 +27,7 @@ export class MetricSearchCard extends Component {
     } else {
       this.setState({ switch: "scodeSearch" });
     }
-    this.setState({ applicationId: event.target.value });
+    this.setState({ appCode: event.target.value });
   };
 
   formSubmit = (fieldsValue) => {
@@ -43,7 +43,7 @@ export class MetricSearchCard extends Component {
     console.log(fromDateChange, toDateChange);
     this.props.searchSubmit(
       this.state.searchIp,
-      this.state.applicationId,
+      this.state.appCode,
       fromDateChange,
       toDateChange
     );

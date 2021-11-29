@@ -26,7 +26,7 @@ export class AllMetricDetails extends Component {
       hostIp: this.state.searchIp,
       endTime: this.state.targetToDate,
       beginTime: this.state.targetFromDate,
-      applicationId: this.state.applicationId,
+      appCode: this.state.appCode,
     };
     let result = await MetricAPI.metricList(data);
     this.setState({
@@ -42,9 +42,9 @@ export class AllMetricDetails extends Component {
     });
   };
 
-  searchSubmit = (searchIp, applicationId, targetFromDate, targetToDate) => {
+  searchSubmit = (searchIp, appCode, targetFromDate, targetToDate) => {
     this.setState(
-      { searchIp, applicationId, targetFromDate, targetToDate, pageNum: 1 },
+      { searchIp, appCode, targetFromDate, targetToDate, pageNum: 1 },
       () => {
         this.initData();
       }
@@ -55,11 +55,11 @@ export class AllMetricDetails extends Component {
     let filename = "效能数据明细";
     let data = {
       hostIp: this.state.searchIp,
-      applicationId: this.state.applicationId,
+      appCode: this.state.appCode,
       beginTime: this.state.targetFromDate,
       endTime: this.state.targetToDate,
     };
-    if (!this.state.searchIp && !this.state.applicationId) {
+    if (!this.state.searchIp && !this.state.appCode) {
       Modal.error({
         title: "Wanging",
         content: "明细数据导出，搜素IP/S码选项不能为空！",
