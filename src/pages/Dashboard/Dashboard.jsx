@@ -129,8 +129,8 @@ export class Dashboard extends Component {
     if (res != null) {
       this.setState({
         domaintarget: domainString,
-        domainuv: res.pv,
-        domainpv: res.uv,
+        domainuv: res.uv,
+        domainpv: res.pv,
         domainavg: res.avgResponsetime,
         domainsum: res.sumSize,
         domaindate: res.createTime,
