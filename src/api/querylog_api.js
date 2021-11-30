@@ -60,6 +60,27 @@ class QuerylogAPI extends Server {
       throw err;
     }
   }
+
+  async queryColumnStat(data) {
+    try {
+      let result = await this.axios(
+        "get",
+        "/api/v1/querylog/columnStat" + getUrlConcat(data)
+      );
+      if (result) {
+        return result;
+      } else {
+        let err = {
+          tip: "获取域名列式数据失败",
+          response: result,
+        };
+        throw err;
+      }
+    } catch (err) {
+      console.log(err);
+      throw err;
+    }
+  }
 }
 
 export default new QuerylogAPI();

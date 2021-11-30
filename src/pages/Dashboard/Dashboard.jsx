@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import DashBoardAPI from "@/api/dashboard";
 import QuerylogAPI from "@/api/querylog_api";
-import { Descriptions, PageHeader, Select, Divider } from "antd";
+import { Descriptions, PageHeader, Select, Divider, Empty } from "antd";
 import SkywalkingAPI from "@/api/skywalking";
 import Topology from "./components/Topology";
 import DomainStat from "./components/DomainStat";
@@ -19,7 +19,9 @@ export class Dashboard extends Component {
     warnUrlString: "",
     domainStat: {},
     domainQueryList: [],
+    domainList: [],
     iptarget: "",
+    domaintarget: "",
     topoTitle: "",
     topoNodes: [],
     topoCalls: [],
@@ -65,6 +67,7 @@ export class Dashboard extends Component {
     this.topologyRequest(sCode);
     this.setState({ sCodeSelectDefaultKey: sCode });
     let res = await DashBoardAPI.sCodeDashBoard({ appCode: sCode });
+    // nodeStat 处理
     if (res.data.ipList != null) {
       this.setState(
         {
@@ -77,14 +80,28 @@ export class Dashboard extends Component {
     } else {
       this.setState({ iptarget: "" });
     }
-    let resquerylog = await QuerylogAPI.getStatByScode({ appCode: sCode });
-    if (resquerylog.data != null) {
-      this.setState({
-        domainQueryList: resquerylog.data,
+    // DomainStat 处理
+    let sCodeDomains = await QuerylogAPI.getStatByScode({ appCode: sCode });
+    if (sCodeDomains.data != null) {
+      const domains = [];
+      sCodeDomains.data.forEach((item) => {
+        domains.push(item.domain);
       });
+      this.setState(
+        {
+          domainQueryList: sCodeDomains.data,
+          domainList: domains,
+          domaintarget: domains[0],
+        },
+        () => {
+          this.domainSelect(domains[0]);
+        }
+      );
     } else {
       this.setState({
         domainQueryList: [],
+        domainList: [],
+        domaintarget: "",
       });
     }
     this.setState({
@@ -102,6 +119,21 @@ export class Dashboard extends Component {
         memList: res.memoryMaxUsage,
         cpuList: res.cpuMaxUsage,
         createtime: res.createTime,
+      });
+    }
+  };
+
+  // DomainStat 节点所有函数 start
+  domainSelect = async (domainString) => {
+    let res = await QuerylogAPI.queryColumnStat({ domain: domainString });
+    if (res != null) {
+      this.setState({
+        domaintarget: domainString,
+        domainuv: res.pv,
+        domainpv: res.uv,
+        domainavg: res.avgResponsetime,
+        domainsum: res.sumSize,
+        domaindate: res.createTime,
       });
     }
   };
@@ -262,8 +294,50 @@ export class Dashboard extends Component {
             createtime={this.state.createtime}
           />
         </PageHeader>
-        <PageHeader title="域名信息" className="domainCard">
-          <DomainStat domainStats={this.state.domainQueryList} />
+        <PageHeader
+          title="域名信息"
+          className="domainCard"
+          extra={
+            <Select
+              key="domainSelect"
+              showSearch
+              value={this.state.domaintarget}
+              style={{ width: 200 }}
+              placeholder="Select a person"
+              optionFilterProp="children"
+              onChange={this.domainSelect}
+              filterOption={(input, option) =>
+                (Array.isArray(option.props.children)
+                  ? option.props.children.join("")
+                  : option.props.children
+                )
+                  .toLowerCase()
+                  .indexOf(input.toLowerCase()) >= 0
+              }
+            >
+              {this.state.domainList &&
+                this.state.domainList.map((domainString) => {
+                  return (
+                    <Option key={domainString} value={domainString}>
+                      {domainString}
+                    </Option>
+                  );
+                })}
+            </Select>
+          }
+        >
+          {this.state.domainQueryList.length > 0 ? (
+            <DomainStat
+              domainStats={this.state.domainQueryList}
+              uv={this.state.domainuv}
+              pv={this.state.domainpv}
+              avg={this.state.domainavg}
+              sum={this.state.domainsum}
+              createDate={this.state.domaindate}
+            />
+          ) : (
+            <Empty description="此项目中无关联域名数据" />
+          )}
         </PageHeader>
         <PageHeader title="APM信息" className="domainCard">
           <Topology
