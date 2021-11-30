@@ -23,6 +23,9 @@ export class Dashboard extends Component {
     topoTitle: "",
     topoNodes: [],
     topoCalls: [],
+    memList: [],
+    cpuList: [],
+    createtime: [],
     sCodeSelectDefaultKey: "",
   };
 
@@ -63,35 +66,16 @@ export class Dashboard extends Component {
     this.setState({ sCodeSelectDefaultKey: sCode });
     let res = await DashBoardAPI.sCodeDashBoard({ appCode: sCode });
     if (res.data.ipList != null) {
-      this.setState({});
-      let varIpString = res.data.ipList.join("&var-ip=");
-      let cpuUrlString =
-        "https://grafana-ops.haier.net/d/oslinux001/linux?viewPanel=6&orgId=1&kiosk&var-ip=" +
-        varIpString;
-      let memUrlString =
-        "https://grafana-ops.haier.net/d/oslinux001/linux?viewPanel=8&orgId=1&kiosk&var-ip=" +
-        varIpString;
-      let diskUrlString =
-        "https://grafana-ops.haier.net/d/oslinux001/linux?viewPanel=10&orgId=1&kiosk&var-ip=" +
-        varIpString;
-      let warnUrlString =
-        "https://grafana-ops.haier.net/d/oslinux001/linux?viewPanel=12&orgId=1&kiosk&var-ip=" +
-        varIpString;
-      this.setState({
-        cpuUrlString,
-        memUrlString,
-        diskUrlString,
-        warnUrlString,
-        iptarget: res.data.ipList[0],
-      });
+      this.setState(
+        {
+          iptarget: res.data.ipList[0],
+        },
+        () => {
+          this.ipSelect(this.state.iptarget);
+        }
+      );
     } else {
-      this.setState({
-        cpuUrlString: "",
-        memUrlString: "",
-        diskUrlString: "",
-        warnUrlString: "",
-        iptarget: "",
-      });
+      this.setState({ iptarget: "" });
     }
     let resquerylog = await QuerylogAPI.getStatByScode({ appCode: sCode });
     if (resquerylog.data != null) {
@@ -108,6 +92,20 @@ export class Dashboard extends Component {
       sCodeRecord: res.data,
     });
   };
+
+  //nodeStat 节点所有函数 start
+  ipSelect = async (hostIp) => {
+    let res = await DashBoardAPI.queryHostStat({ hostIp: hostIp });
+    if (res != null) {
+      this.setState({
+        iptarget: hostIp,
+        memList: res.memoryMaxUsage,
+        cpuList: res.cpuMaxUsage,
+        createtime: res.createTime,
+      });
+    }
+  };
+  // APM 节点所有函数 start
   topologyRequest = async (sCode) => {
     let res = await SkywalkingAPI.listApp({
       appCode: sCode,
@@ -133,8 +131,6 @@ export class Dashboard extends Component {
       topoNodes: topRes.data.topo.nodes,
     });
   };
-
-  //nodeStat 节点所有函数 start
 
   render() {
     const { Option } = Select;
@@ -261,9 +257,9 @@ export class Dashboard extends Component {
         >
           <NodeStat
             sCodeRecord={this.state.sCodeRecord}
-            cpuUrlString={this.state.cpuUrlString}
-            memUrlString={this.state.memUrlString}
-            diskUrlString={this.state.diskUrlString}
+            memList={this.state.memList}
+            cpuList={this.state.cpuList}
+            createtime={this.state.createtime}
           />
         </PageHeader>
         <PageHeader title="域名信息" className="domainCard">

@@ -44,6 +44,27 @@ class DashBoardAPI extends Server {
       throw err;
     }
   }
+
+  async queryHostStat(data) {
+    try {
+      let result = await this.axios(
+        "get",
+        "/api/v1/prom/indicatorday/hostStat" + getUrlConcat(data)
+      );
+      if (result) {
+        return result;
+      } else {
+        let err = {
+          tip: "HostStat 数据加载失败",
+          response: result,
+        };
+        throw err;
+      }
+    } catch (err) {
+      console.log(err);
+      throw err;
+    }
+  }
 }
 
 export default new DashBoardAPI();
