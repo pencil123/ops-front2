@@ -33,18 +33,6 @@ const menu = [
     ],
   },
   {
-    name: "告警管理",
-    icon: "icon-gaojingshezhi",
-    key: "alarm",
-    children: [
-      {
-        name: "告警信息查询",
-        icon: "icon-submenu",
-        key: "AlarmIndex",
-      },
-    ],
-  },
-  {
     name: "拨测应用",
     icon: "icon-fuwuboce",
     key: "dialing",
