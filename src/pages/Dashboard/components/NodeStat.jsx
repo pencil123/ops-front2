@@ -1,10 +1,11 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { Descriptions } from "antd";
+import { Descriptions, Empty } from "antd";
 import * as echarts from "echarts";
 
 export class NodeStat extends Component {
   componentDidUpdate() {
+    this.myChart.resize();
     this.topoChart();
   }
   componentDidMount() {
@@ -67,7 +68,19 @@ export class NodeStat extends Component {
             {this.props.sCodeRecord.memoryLowUsage}
           </Descriptions.Item>
         </Descriptions>
-        <div id="nodestat" style={{ width: "100%", height: 300 }}></div>
+        <div
+          id="nodestat"
+          style={{
+            width: "100%",
+            height: 300,
+            display: this.props.createtime.length > 0 ? "block" : "none",
+          }}
+        />
+        {this.props.createtime.length == 0 ? (
+          <Empty description="获取此服务器节点效能数据失败！" />
+        ) : (
+          ""
+        )}
       </>
     );
   }
