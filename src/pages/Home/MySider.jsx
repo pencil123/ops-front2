@@ -22,7 +22,11 @@ export class MySider extends Component {
     let isManager = sessionStorage.getItem("isManager");
     if (isManager === "undefined" || isManager === null) {
       let result = await AuthAPI.userRole();
-      isManager = result.data;
+      if (result.data.roleKey === "admin") {
+        isManager = true;
+      } else {
+        isManager = false;
+      }
       sessionStorage.setItem("isManager", isManager);
       this.initRole();
     }

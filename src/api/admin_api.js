@@ -25,9 +25,12 @@ class AdminAPI extends Server {
     }
   }
 
-  async adminList() {
+  async getUsersByRoleKey(data) {
     try {
-      let result = await this.axios("get", "/api/v1/user/account/find/page");
+      let result = await this.axios(
+        "get",
+        "/api/v1/user/role/listUsersByRoleKey" + getUrlConcat(data)
+      );
       if (result) {
         return result;
       } else {

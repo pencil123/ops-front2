@@ -13,12 +13,11 @@ export class ManagerList extends Component {
   componentDidMount() {
     this.initData();
   }
-
   initData = async () => {
-    let result = await AdminAPI.adminList();
+    let result = await AdminAPI.getUsersByRoleKey({ roleKey: "admin" });
+    console.log("响应数据：" + result.data);
     this.setState({
-      records: result.data.records,
-      totalCount: result.data.totalCount,
+      records: result.data,
     });
   };
   managerDelete = (userCode) => {
@@ -47,8 +46,16 @@ export class ManagerList extends Component {
         dataIndex: "userCode",
       },
       {
-        title: "创建时间",
-        dataIndex: "createTime",
+        title: "姓名",
+        dataIndex: "userName",
+      },
+      {
+        title: "所属部门",
+        dataIndex: "deptName",
+      },
+      {
+        title: "状态（正常：1）",
+        dataIndex: "status",
       },
       {
         title: "操作",
@@ -110,7 +117,6 @@ export class ManagerList extends Component {
           loading={this.state.loading}
           pagination={{
             defaultPageSize: 20,
-            total: this.state.totalCount,
             showSizeChanger: false,
           }}
           dataSource={this.state.records}
