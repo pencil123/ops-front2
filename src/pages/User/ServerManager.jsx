@@ -25,12 +25,19 @@ export class ServerManager extends Component {
       hostIp: this.state.hostIp,
       appCode: this.state.appCode,
     };
-    let result = await NodeAPI.nodeList(data);
-    this.setState({
-      records: result.data.records,
-      totalCount: result.data.totalCount,
-      loading: false,
-    });
+    try {
+      let result = await NodeAPI.nodeList(data);
+      this.setState({
+        records: result.data.records,
+        totalCount: result.data.totalCount,
+        loading: false,
+      });
+    } catch (error) {
+      console.error(error.error);
+      this.setState({
+        loading: false,
+      });
+    }
   };
   pageTurn = (pageTrunObj) => {
     this.setState({ pageNum: pageTrunObj.current }, () => {

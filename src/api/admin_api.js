@@ -9,7 +9,11 @@ class AdminAPI extends Server {
    */
   async adminAdd(data) {
     try {
-      let result = await this.axios("post", "/api/v1/user/account/add", data);
+      let result = await this.axios(
+        "post",
+        "/api/v1/user/role/addUserRole",
+        data
+      );
       if (result) {
         return result;
       } else {
@@ -49,8 +53,9 @@ class AdminAPI extends Server {
   async adminDelete(data) {
     try {
       let result = await this.axios(
-        "get",
-        "/api/v1/user/account/delete" + getUrlConcat(data)
+        "post",
+        "/api/v1/user/role/delUserRoleByUserCode",
+        data
       );
       if (result) {
         return result;

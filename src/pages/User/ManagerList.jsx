@@ -95,6 +95,12 @@ export class ManagerList extends Component {
             <Form.Item label="用户ID/工号" name="userCode">
               <Input />
             </Form.Item>
+            <Form.Item
+              label="Role"
+              name="roleId"
+              hidden
+              initialValue={1}
+            ></Form.Item>
           </Form>
         </Modal>
         <PageHeader

@@ -8,6 +8,7 @@ import Dashboard from "./Dashboard/Dashboard";
 import DialingIndex from "./Dialing/DialingIndex";
 import AlarmIndex from "./Alarm/AlarmIndex";
 import Statlist from "./Querylog/Statlist";
+import Role from "./User/Role";
 
 const menu = [
   {
@@ -84,9 +85,26 @@ const menu = [
     ],
   },
   {
-    name: "管理员",
+    name: "用户管理",
     icon: "icon-admin",
     key: "User",
+    children: [
+      {
+        name: "角色管理",
+        icon: "icon-submenu",
+        key: "role",
+      },
+      {
+        name: "分组管理",
+        icon: "icon-submenu",
+        key: "ManagerList",
+      },
+    ],
+  },
+  {
+    name: "资产管理",
+    icon: "icon-admin",
+    key: "Asset",
     children: [
       {
         name: "服务器管理",
@@ -105,6 +123,7 @@ const menu = [
 const tabs = {
   dashboard: <Dashboard />,
   ServerManager: <ServerManager />,
+  role: <Role />,
   ManagerList: <ManagerList />,
   AllMetricDetails: <AllMetricDetails />,
   AnalysedMetricData: <AnalysedMetricData />,
