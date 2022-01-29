@@ -3,7 +3,6 @@ class UserAPI extends Server {
   async listRoles() {
     try {
       let res = await this.axios("get", "/api/v1/user/role/listRoles");
-      console.log("输出roles:", res);
       if (res.code === 200) {
         return res.data;
       } else {

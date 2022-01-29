@@ -2,13 +2,13 @@ import React from "react";
 import AllMetricDetails from "@/pages/Prom/AllMetricDetails";
 import AnalysedMetricData from "@/pages/Prom/AnalysedMetricData";
 import ServerManager from "@/pages/User/ServerManager";
-import ManagerList from "@/pages/User/ManagerList";
+import ManagerList from "@/pages/Admin/ManagerList";
 import ICPDomain from "./ICP/ICPDomain";
 import Dashboard from "./Dashboard/Dashboard";
 import DialingIndex from "./Dialing/DialingIndex";
 import AlarmIndex from "./Alarm/AlarmIndex";
 import Statlist from "./Querylog/Statlist";
-import Role from "./User/Role";
+import UserGroupManager from "./User/UserGroupManager";
 
 const menu = [
   {
@@ -90,27 +90,22 @@ const menu = [
     key: "User",
     children: [
       {
-        name: "角色管理",
+        name: "用户分组管理",
         icon: "icon-submenu",
-        key: "role",
+        key: "UserGroupManager",
       },
-      {
-        name: "分组管理",
-        icon: "icon-submenu",
-        key: "ManagerList",
-      },
-    ],
-  },
-  {
-    name: "资产管理",
-    icon: "icon-admin",
-    key: "Asset",
-    children: [
       {
         name: "服务器管理",
         icon: "icon-submenu",
         key: "ServerManager",
       },
+    ],
+  },
+  {
+    name: "管理员菜单",
+    icon: "icon-admin",
+    key: "Asset",
+    children: [
       {
         name: "管理员列表",
         icon: "icon-submenu",
@@ -123,7 +118,7 @@ const menu = [
 const tabs = {
   dashboard: <Dashboard />,
   ServerManager: <ServerManager />,
-  role: <Role />,
+  UserGroupManager: <UserGroupManager />,
   ManagerList: <ManagerList />,
   AllMetricDetails: <AllMetricDetails />,
   AnalysedMetricData: <AnalysedMetricData />,

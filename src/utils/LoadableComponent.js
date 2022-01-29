@@ -10,6 +10,7 @@ import * as bs from "react-bootstrap";
 const LoadableComponent = (component) => {
   return Loadable({
     loader: () => component,
+    // eslint-disable-next-line react/display-name
     loading: () => {
         return (
           <bs.Spinner animation="border" role="status">
