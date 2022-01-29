@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import { Table, Modal, PageHeader, Form, Input } from "antd";
+import GroupUserManage from "./GroupUserManage";
+import { PanesContext } from "@/context/Panes";
 import request from "@/utils/request";
 
 export class UserGroupManager extends Component {
@@ -16,6 +18,21 @@ export class UserGroupManager extends Component {
   };
   cancelModalFunc(object) {
     this.setState({ ...object });
+  }
+  addPane(userGroup) {
+    const itemkey = "userGrp" + userGroup.grpId;
+    const panes = this.context.panes.slice();
+    const activeMenu = itemkey;
+    //如果标签页不存在就添加一个
+    if (!panes.find((i) => i.key === activeMenu)) {
+      //localStorage.setItem("userGroupInfo", userGroup);
+      panes.push({
+        name: "用户组成员管理",
+        key: itemkey,
+        content: <GroupUserManage userGroupObj={userGroup} />,
+      });
+    }
+    this.context.updateState({ panes, activeMenu });
   }
 
   UserGrpAddModal = ({ visible, onCreate, onCancel }) => {
@@ -75,13 +92,16 @@ export class UserGroupManager extends Component {
         title: "操作",
         dataIndex: "grpId",
         render: (text, record) => (
-          <button
-            onClick={() => {
-              this.setState({ userGrpDelShow: true, userGrpDelItem: record });
-            }}
-          >
-            删除
-          </button>
+          <>
+            <button
+              onClick={() => {
+                this.setState({ userGrpDelShow: true, userGrpDelItem: record });
+              }}
+            >
+              删除
+            </button>
+            <button onClick={() => this.addPane(record)}>成员管理</button>
+          </>
         ),
       },
     ];
@@ -145,9 +165,13 @@ export class UserGroupManager extends Component {
     this.getGroupInfo();
   };
   userGrpAddFunc = async (values) => {
-    await request.post("/v1/user/group/addUserGroup", values);
-    this.setState({ userGrpAddShow: false });
-    this.getGroupInfo();
+    try {
+      await request.post("/v1/user/group/addUserGroup", values);
+      this.setState({ userGrpAddShow: false });
+      this.getGroupInfo();
+    } catch (error) {
+      this.setState({ userGrpAddShow: false });
+    }
   };
   getGroupInfo = async () => {
     let res = await request.get("/v1/user/group/pageUserGroups", {
@@ -166,5 +190,5 @@ export class UserGroupManager extends Component {
     this.getGroupInfo();
   }
 }
-
+UserGroupManager.contextType = PanesContext;
 export default UserGroupManager;
